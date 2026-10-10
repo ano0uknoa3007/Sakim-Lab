@@ -16,8 +16,13 @@
 html.sk-editing [data-sk-key]{outline:1px dashed rgba(226,88,43,.8);outline-offset:3px;cursor:text!important;border-radius:2px}
 html.sk-editing [data-sk-key]:focus{outline:2px solid #e2582b;background:rgba(226,88,43,.08)}
 html.sk-editing [data-sk-key].sk-changed{outline-color:#2b8a3e}
-/* the editor always uses the normal mouse pointer, never the site's drawn cursor */
-.cursor{display:none!important}
+/* the editor runs without the site's scripts: show every part of the page, still */
+.cursor,.dock,.intro{display:none!important}
+.area-body{grid-template-rows:1fr!important}
+.area-body>ul{padding-bottom:32px}
+.pg-pin,.night-pin{min-height:0!important}
+.pg-track,.night-track,.track{flex-wrap:wrap;width:auto!important;transform:none!important}
+.teasers{overflow:visible}
 </style>
 <div id="sk-ed" role="region" aria-label="Editor de textos">
   <span id="sk-st">Nenhuma alteração</span>
@@ -98,6 +103,15 @@ html.sk-editing [data-sk-key].sk-changed{outline-color:#2b8a3e}
     return lines.join('\n');
   }
   btn.addEventListener('click', function () { setEditing(!editing); });
+  /* PT / EN without the site's scripts */
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var l = b.dataset.lang; root.lang = l;
+      document.querySelectorAll('[data-' + l + ']').forEach(function (el) { if (document.activeElement !== el) el.innerHTML = el.getAttribute('data-' + l); });
+      document.querySelectorAll('[data-alt-' + l + ']').forEach(function (el) { el.alt = el.getAttribute('data-alt-' + l); });
+      document.querySelectorAll('.lang button').forEach(function (x) { x.classList.toggle('on', x === b); });
+    });
+  });
   document.getElementById('sk-send').addEventListener('click', function () {
     if (document.activeElement && document.activeElement.dataset && document.activeElement.dataset.skKey) document.activeElement.blur();
     out.value = report(); panel.hidden = false; confirmClear = false;

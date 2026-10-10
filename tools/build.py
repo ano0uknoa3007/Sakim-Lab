@@ -640,7 +640,10 @@ def main():
     # editor.html: the home page with every text editable in place (see tools/editor.html)
     with open(os.path.join(ROOT, "tools", "editor.html"), encoding="utf-8") as f:
         editor = f.read()
-    write("editor.html", home.replace("<head>\n", '<head>\n<meta name="robots" content="noindex">\n', 1)
+    # it loads none of the site's scripts (no animations, no drawn cursor): a still page that is quick to edit
+    page = re.sub(r'<script src="assets/js/[^"]+" defer></script>\n', "", home)
+    page = re.sub(r"<script>try\{if\(\(!location\.hash.*?</script>\n", "", page)
+    write("editor.html", page.replace("<head>\n", '<head>\n<meta name="robots" content="noindex">\n', 1)
           .replace("</body>", editor + "</body>", 1))
     write("contacto.html", build_contact())
     for n, slug in enumerate(PROJECT_ORDER, 1):
