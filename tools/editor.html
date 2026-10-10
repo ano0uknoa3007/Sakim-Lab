@@ -137,8 +137,21 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     apply(el);
     if (editing) el.contentEditable = 'true';
   }
+  /* texts with one version for both languages (names, figures, times, press titles, contacts):
+     every leaf element with letters or digits outside a [data-pt]; the same text shares one key, so a name changes everywhere */
+  var NOT_PLAIN = '#sk-ed,#sk-panel,#sk-colors,#sk-photos,[data-pt],.lang,.drawer-close,noscript,script,style,.intro,.map,.pg-n,.night-n,.pg-count,.teaser-read,.mikas-source,.done .mono,.cursor,.chat,.chat-log';
+  function tagPlain(el) {
+    if (el.dataset.skKey || el.children.length || el.tagName === 'I' || el.closest(NOT_PLAIN)) return;
+    var t = el.textContent.trim();
+    if (!/[0-9A-Za-zÀ-ÿ]/.test(t) || /^[A-D]$/.test(t)) return;
+    el.dataset.skPlain = '1'; el.dataset.skOrig = el.textContent;
+    el.dataset.skKey = 'p' + hash(t);
+    apply(el);
+    if (editing) el.contentEditable = 'true';
+  }
   function apply(el) {
     var e = edits[el.dataset.skKey]; if (!e) return;
+    if (el.dataset.skPlain) { el.classList.add('sk-changed'); if (document.activeElement !== el) el.textContent = e.text; return; }
     el.setAttribute('data-pt', e.pt); el.setAttribute('data-en', e.en);
     el.classList.add('sk-changed');
     if (document.activeElement !== el) el.innerHTML = e[lang()];
@@ -147,7 +160,18 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     return html.replace(/<span class="ch acc">([^<]*)<\/span>/g, '<span class="acc">$1</span>').replace(/<span class="ch">([^<]*)<\/span>/g, '$1')
       .replace(/&nbsp;/g, ' ').replace(/(<br\s*\/?>\s*)+$/, '').replace(/<(\/?)b>/g, '<$1strong>').replace(/<(\/?)i>/g, '<$1em>').trim();
   }
+  function savePlain(el) {
+    var v = el.textContent.replace(/\u00a0/g, ' ').trim(), k = el.dataset.skKey, orig = el.dataset.skOrig.trim();
+    var cur = edits[k] ? edits[k].text : orig;
+    if (v === cur) return;
+    if (v === orig) delete edits[k]; else edits[k] = { plain: true, orig: orig, text: v };
+    document.querySelectorAll('[data-sk-key="' + k + '"]').forEach(function (x) {
+      x.classList.toggle('sk-changed', !!edits[k]); if (x !== el) x.textContent = v;
+    });
+    writeLS(KEY, edits); status();
+  }
   function save(el) {
+    if (el.dataset.skPlain) return savePlain(el);
     var l = lang(), v = clean(el.innerHTML);
     if (v === el.getAttribute('data-' + l)) return;
     el.setAttribute('data-' + l, v);
@@ -207,6 +231,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   function scan(r) {
     r.querySelectorAll('[data-pt][data-en]').forEach(tag);
     if (r.matches && r.matches('[data-pt][data-en]')) tag(r);
+    r.querySelectorAll('*').forEach(tagPlain);
     r.querySelectorAll('img').forEach(tagImg);
     if (r.tagName === 'IMG') tagImg(r);
   }
@@ -357,7 +382,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     if (!el) return;
     ev.stopPropagation();
     if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); el.blur(); }
-    if (ev.key === 'Escape') { el.innerHTML = el.getAttribute('data-' + lang()); el.blur(); }
+    if (ev.key === 'Escape') { if (el.dataset.skPlain) el.textContent = edits[el.dataset.skKey] ? edits[el.dataset.skKey].text : el.dataset.skOrig; else el.innerHTML = el.getAttribute('data-' + lang()); el.blur(); }
   }, true);
   document.addEventListener('focusout', function (ev) { var el = ev.target.closest && ev.target.closest('[data-sk-key]'); if (el && editing) save(el); }, true);
   document.addEventListener('paste', function (ev) {
@@ -371,6 +396,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     var lines = ['ALTERAÇÕES — SAKIM LAB', ''], n = 0;
     Object.keys(edits).forEach(function (k) {
       var e = edits[k];
+      if (e.plain) { n++; lines.push(n + '. [PT+EN] ANTES: ' + e.orig, '   DEPOIS: ' + e.text, ''); return; }
       [['pt', 'PT'], ['en', 'EN']].forEach(function (p) {
         if (e[p[0]] === e['orig_' + p[0]]) return;
         n++;
