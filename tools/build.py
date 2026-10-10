@@ -653,6 +653,14 @@ def main():
     for slug, html_ in places.items():
         body = html_[html_.index('<div class="place-content"'):html_.index("\n</main>")]
         templates += f'<template id="place-{slug}">{body.replace("../assets/", "assets/")}</template>\n'
+    # and the list of archived photos (assets/img/lugares/<project>/arquivo/), to swap or add from
+    archive = {}
+    for slug in PROJECT_ORDER:
+        folder = os.path.join(ROOT, "assets/img/lugares", slug, "arquivo")
+        if os.path.isdir(folder):
+            archive[slug] = [f"assets/img/lugares/{slug}/arquivo/{f}" for f in sorted(os.listdir(folder), key=lambda f: (len(f), f))
+                             if f.lower().endswith((".jpg", ".jpeg", ".png"))]
+    templates += f'<script type="application/json" id="sk-archive">{json.dumps(archive)}</script>\n'
     write("editor.html", page.replace("<head>\n", '<head>\n<meta name="robots" content="noindex">\n', 1)
           .replace("</body>", templates + editor + "</body>", 1))
     write("lugares.html", forward("index.html#projectos", "Projectos"))

@@ -24,13 +24,13 @@ def data_uri(rel):
         return f"data:{kind};base64,{base64.b64encode(f.read()).decode()}"
 
 
-def photo_uri(rel):
+def photo_uri(rel, size=1200, quality=72):
     """A lighter JPEG copy for the editor; the site keeps its own files."""
     from PIL import Image
     im = Image.open(os.path.join(ROOT, rel))
-    im.thumbnail((1200, 1200))
+    im.thumbnail((size, size))
     buf = io.BytesIO()
-    im.convert("RGB").save(buf, "JPEG", quality=72, optimize=True)
+    im.convert("RGB").save(buf, "JPEG", quality=quality, optimize=True)
     return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
 
 
@@ -50,6 +50,10 @@ def main():
     # every photo once, in a list the editor reads (window.SK_IMG); the <img> keeps where it lives on the site
     paths = sorted(set(re.findall(r'src="(assets/img/[^"]+)"', page)))
     images = {p: photo_uri(p) if p.lower().endswith((".jpg", ".jpeg")) else data_uri(p) for p in paths}
+    # the archived photos, smaller still: they are only for choosing (the site uses the files themselves)
+    archive = json.loads(re.search(r'<script type="application/json" id="sk-archive">(.*?)</script>', page).group(1))
+    for path in (p for ps in archive.values() for p in ps):
+        images.setdefault(path, photo_uri(path, 400, 60))
     page = re.sub(r'src="(assets/img/[^"]+)"', r'data-sk-src="\1"', page)
     page = page.replace("</head>", f"<script>window.SK_IMG = {json.dumps(images)};</script>\n</head>", 1)
 

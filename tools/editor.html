@@ -28,7 +28,7 @@
 #sk-photos summary:focus-visible{outline:2px solid #e2582b;outline-offset:2px}
 #sk-photos h4{margin:4px 0 0;font:600 11px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#a9a59d}
 #sk-photos p{margin:0;color:#c9c5bd}
-#sk-photos .ph{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:center}
+#sk-photos .ph{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:start;padding-bottom:4px}
 #sk-photos .ph img{width:72px;height:54px;object-fit:cover;border-radius:6px;background:#333}
 #sk-photos .ph.sk-gone img{opacity:.3}
 .sk-del{display:none!important}
@@ -38,6 +38,25 @@
 #sk-photos button{appearance:none;border:0;border-radius:999px;padding:7px 12px;font:600 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;cursor:pointer;background:#f3f0ea;color:#161616}
 #sk-photos button.ghost{background:transparent;border:1px solid #f3f0ea;color:#f3f0ea}
 #sk-photos button:focus-visible{outline:2px solid #e2582b;outline-offset:2px}
+#sk-photos .add{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+#sk-photos .add small{color:#a9a59d;width:100%}
+#sk-photos button:disabled{opacity:.35;cursor:default}
+#sk-photos .ph small{display:block;color:#a9a59d;margin-bottom:4px}
+#sk-arch{position:fixed;inset:0;z-index:2147483002;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);font:500 13px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif}
+#sk-arch[hidden]{display:none}
+#sk-arch .box{background:#161616;color:#f3f0ea;border-radius:16px;padding:18px;width:min(920px,100%);max-height:calc(100% - 32px);display:flex;flex-direction:column;gap:12px;box-sizing:border-box}
+#sk-arch .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#sk-arch h3{margin:0;font:700 16px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+#sk-arch p{margin:0;color:#c9c5bd}
+#sk-arch .pick{display:flex;gap:8px;align-items:center}
+#sk-arch select{font:inherit;padding:6px 8px;border-radius:8px;background:#222;color:#f3f0ea;border:1px solid #444}
+#sk-arch-grid{overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;min-height:0}
+#sk-arch-grid button{appearance:none;border:2px solid transparent;border-radius:8px;padding:0;background:#222;cursor:pointer;aspect-ratio:4/3;overflow:hidden;position:relative}
+#sk-arch-grid button:hover,#sk-arch-grid button:focus-visible{border-color:#e2582b;outline:none}
+#sk-arch-grid img{width:100%;height:100%;object-fit:cover;display:block}
+#sk-arch-grid button.used::after{content:"em uso";position:absolute;left:6px;top:6px;padding:2px 6px;border-radius:999px;background:#2b8a3e;color:#fff;font:600 10px/1.4 system-ui,sans-serif}
+#sk-arch button.ghost{appearance:none;border-radius:999px;padding:7px 12px;font:600 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;cursor:pointer;background:transparent;border:1px solid #f3f0ea;color:#f3f0ea}
+.sk-added img{outline:2px solid #2b8a3e;outline-offset:-2px}
 #sk-colors label{display:flex;align-items:center;justify-content:space-between;gap:12px}
 #sk-colors input{width:56px;height:32px;padding:0;border:1px solid #555;border-radius:6px;background:none;cursor:pointer}
 html.sk-editing [data-sk-key]{outline:1px dashed rgba(226,88,43,.8);outline-offset:3px;cursor:text!important;border-radius:2px}
@@ -65,8 +84,16 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
 </div>
 <div id="sk-photos" role="dialog" aria-label="Fotos" hidden>
   <div class="top"><h3>Fotos</h3><button type="button" class="ghost" id="sk-photos-close">Fechar</button></div>
-  <p>Abra um projecto para ver as suas fotos e escolha "Trocar" para pôr outra do seu computador ou "Apagar" para a tirar. Em modo edição também pode clicar numa foto da página.</p>
+  <p>Abra um projecto para ver as suas fotos. Pode trocar cada foto por outra do seu computador ou do arquivo do site, apagá-la, ou juntar fotos novas (até 20 por projecto).</p>
   <div id="sk-photo-list"></div>
+</div>
+<div id="sk-arch" hidden>
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="sk-arch-h">
+    <div class="top"><h3 id="sk-arch-h">Arquivo</h3><button type="button" class="ghost" id="sk-arch-close">Fechar</button></div>
+    <p id="sk-arch-what"></p>
+    <label class="pick">Fotos de <select id="sk-arch-slug"></select></label>
+    <div id="sk-arch-grid"></div>
+  </div>
 </div>
 <div id="sk-colors" role="dialog" aria-label="Cores" hidden>
   <label>Fundo <input type="color" id="sk-c-paper" data-var="--paper"></label>
@@ -97,8 +124,12 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   var edits = {}, photos = {}, colors = {}, editing = false, confirmClear = false, pickFor = null;
   function readLS(k) { try { return JSON.parse(localStorage.getItem(k) || '{}') || {}; } catch (e) { return {}; } }
   function writeLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-  var DKEY = 'sakim-deleted', deleted = {};
-  edits = readLS(KEY); colors = readLS(CKEY); deleted = readLS(DKEY);
+  var DKEY = 'sakim-deleted', deleted = {}, AKEY = 'sakim-added', added = {}, addedData = {}, MAXP = 20;
+  edits = readLS(KEY); colors = readLS(CKEY); deleted = readLS(DKEY); added = readLS(AKEY);
+  /* the photos kept in the site's archive (assets/img/lugares/<project>/arquivo/), by project */
+  var ARCHIVE = {}; try { ARCHIVE = JSON.parse(document.getElementById('sk-archive').textContent); } catch (e) {}
+  /* a photo is a picture from the computer (data:) or a file of the site ("repo:assets/…") */
+  function resolve(v) { if (v && v.indexOf('repo:') === 0) { var p = v.slice(5); return (window.SK_IMG && SK_IMG[p]) || p; } return v; }
 
   /* photos live in IndexedDB (they are too big for localStorage); without it they last until the page closes */
   var idb = null;
@@ -125,8 +156,10 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
 
   function status() {
     var t = Object.keys(edits).length, p = Object.keys(photos).length, c = Object.keys(colors).length, x = Object.keys(deleted).length, parts = [];
+    var a = Object.keys(added).reduce(function (n, s) { return n + added[s].length; }, 0);
     if (t) parts.push(t + (t === 1 ? ' texto' : ' textos'));
     if (p) parts.push(p + (p === 1 ? ' foto' : ' fotos'));
+    if (a) parts.push(a + (a === 1 ? ' foto nova' : ' fotos novas'));
     if (x) parts.push(x + (x === 1 ? ' foto apagada' : ' fotos apagadas'));
     if (c) parts.push('cores');
     st.textContent = parts.length ? 'Alterado: ' + parts.join(', ') : 'Nenhuma alteração';
@@ -196,7 +229,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   }
   function imgKey(path) { var m = path.match(/assets\/img\/(?:lugares|mini)\/([^/]+)\/([^/]+)$/); return m ? m[1] + '/' + m[2] : path; }
   function tagImg(img) {
-    if (img.dataset.skImg || img.closest('#sk-ed,#sk-panel,#sk-colors,#sk-photos')) return;
+    if (img.dataset.skImg || img.dataset.skAdd || img.closest('#sk-ed,#sk-panel,#sk-colors,#sk-photos,#sk-arch')) return;
     var path = imgPath(img); if (!path) return;
     if (!img.getAttribute('data-sk-src')) img.setAttribute('data-sk-src', path);
     /* the offline file keeps each photo once, in window.SK_IMG */
@@ -205,7 +238,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     if (photos[img.dataset.skImg]) showPhoto(img);
     if (deleted[img.dataset.skImg]) hideBox(img, true);
   }
-  function showPhoto(img) { img.src = photos[img.dataset.skImg]; img.removeAttribute('loading'); img.classList.add('sk-changed'); }
+  function showPhoto(img) { img.src = resolve(photos[img.dataset.skImg]); img.removeAttribute('loading'); img.classList.add('sk-changed'); }
   function shrink(file) {
     return new Promise(function (res, rej) {
       var r = new FileReader();
@@ -230,9 +263,8 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     if (!f || !k) return;
     st.textContent = 'A carregar a foto…';
     shrink(f).then(function (data) {
-      photos[k] = data; idbPut(k, data);
-      document.querySelectorAll('img[data-sk-img]').forEach(function (img) { if (img.dataset.skImg === k) showPhoto(img); });
-      status(); if (!pbox.hidden) listPhotos();
+      if (k.add) return addPhoto(k.add, data);
+      setPhoto(k, data);
     }, function () { st.textContent = 'Não foi possível ler essa imagem'; });
   });
 
@@ -246,7 +278,77 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
 
   /* ---------- the photo list: every photo of the page and of the project pages ---------- */
   var pbox = $('sk-photos'), pbtn = $('sk-photo-btn'), plist = $('sk-photo-list');
-  function photoSrc(k, path) { return photos[k] || (window.SK_IMG && SK_IMG[path]) || path; }
+  function photoSrc(k, path) { return photos[k] ? resolve(photos[k]) : (window.SK_IMG && SK_IMG[path]) || path; }
+  function setPhoto(k, v) {
+    photos[k] = v; idbPut(k, v);
+    document.querySelectorAll('img[data-sk-img]').forEach(function (img) { if (img.dataset.skImg === k) showPhoto(img); });
+    status(); if (!pbox.hidden) listPhotos();
+  }
+  /* new photos: kept per project, shown at the end of its gallery */
+  function addedSrc(a) { return a.src.indexOf('repo:') === 0 ? resolve(a.src) : addedData[a.id]; }
+  function projectCount(slug) {
+    var t = $('place-' + slug), keys = {};
+    if (t) t.content.querySelectorAll('.gallery img').forEach(function (im) { var k = imgKey((im.getAttribute('data-sk-src') || im.getAttribute('src') || '').replace(/^(\.\.\/)+/, '')); if (!deleted[k]) keys[k] = 1; });
+    return Object.keys(keys).length + (added[slug] || []).length;
+  }
+  function addPhoto(slug, v) {
+    if (projectCount(slug) >= MAXP) { st.textContent = 'Este projecto já tem ' + MAXP + ' fotos'; return; }
+    var id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6), a = { id: id, src: v };
+    if (v.indexOf('repo:') !== 0) { addedData[id] = v; idbPut('add/' + id, v); a.src = 'upload'; }
+    (added[slug] = added[slug] || []).push(a); writeLS(AKEY, added);
+    showAdded(); status(); if (!pbox.hidden) listPhotos();
+  }
+  function removeAdded(slug, id) {
+    added[slug] = (added[slug] || []).filter(function (a) { return a.id !== id; });
+    if (!added[slug].length) delete added[slug];
+    delete addedData[id]; idbPut('add/' + id, null); writeLS(AKEY, added);
+    showAdded(); status(); if (!pbox.hidden) listPhotos();
+  }
+  function addedFigure(a) {
+    var fig = document.createElement('figure'); fig.className = 'g g-m sk-added'; fig.style.setProperty('--span', '4');
+    var im = document.createElement('img'); im.className = 'photo'; im.alt = ''; im.dataset.skAdd = a.id; im.src = addedSrc(a) || '';
+    fig.appendChild(im); return fig;
+  }
+  function showAdded() {
+    if (!sheetBody) return;
+    var pc = sheetBody.querySelector('.place-content'), gal = pc && pc.querySelector('.gallery'); if (!gal) return;
+    gal.querySelectorAll('.sk-added').forEach(function (x) { x.remove(); });
+    (added[pc.getAttribute('data-place')] || []).forEach(function (a) { gal.appendChild(addedFigure(a)); });
+  }
+
+  /* the archive picker: swap a photo for, or add, one of the site's archived photos */
+  var abox = $('sk-arch'), agrid = $('sk-arch-grid'), aslug = $('sk-arch-slug'), archFor = null;
+  Object.keys(ARCHIVE).forEach(function (sl) {
+    var o = document.createElement('option'), t = $('place-' + sl), n = t && t.content.querySelector('.place-mega');
+    o.value = sl; o.textContent = (n ? n.textContent.trim() : sl) + ' (' + ARCHIVE[sl].length + ')'; aslug.appendChild(o);
+  });
+  function usedRepo() {
+    var u = {};
+    Object.keys(photos).forEach(function (k) { if (String(photos[k]).indexOf('repo:') === 0) u[photos[k].slice(5)] = 1; });
+    Object.keys(added).forEach(function (sl) { added[sl].forEach(function (a) { if (a.src.indexOf('repo:') === 0) u[a.src.slice(5)] = 1; }); });
+    return u;
+  }
+  function showArchive(sl) {
+    aslug.value = sl; agrid.innerHTML = ''; var used = usedRepo();
+    (ARCHIVE[sl] || []).forEach(function (path) {
+      var b = document.createElement('button'); b.type = 'button'; b.title = path.split('/').pop();
+      if (used[path]) b.className = 'used';
+      var im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.src = (window.SK_IMG && SK_IMG[path]) || path;
+      b.appendChild(im);
+      b.addEventListener('click', function () {
+        abox.hidden = true;
+        if (archFor.add) addPhoto(archFor.add, 'repo:' + path); else setPhoto(archFor.k, 'repo:' + path);
+      });
+      agrid.appendChild(b);
+    });
+    if (!agrid.children.length) agrid.textContent = 'Este projecto não tem fotos no arquivo.';
+  }
+  function openArchive(what, slug, text) {
+    archFor = what; $('sk-arch-what').textContent = text;
+    showArchive(ARCHIVE[slug] ? slug : Object.keys(ARCHIVE)[0]); abox.hidden = false;
+  }
+  aslug.addEventListener('change', function () { showArchive(aslug.value); });
+  $('sk-arch-close').addEventListener('click', function () { abox.hidden = true; });
   /* a deleted photo disappears with its frame (a gallery tile); the rest of the page stays */
   function hideBox(img, on) { var box = img.closest('figure.g') || img; box.classList.toggle('sk-del', on); }
   function deletePhoto(k, path, on) {
@@ -293,10 +395,20 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     groups.forEach(function (g) {
       var d = document.createElement('details'), sm = document.createElement('summary');
       var changed = g.items.filter(function (it) { return photos[it.k]; }).length, gone = g.items.filter(function (it) { return deleted[it.k]; }).length;
-      sm.textContent = g.title + ' · ' + g.items.length + (changed ? ' · ' + changed + ' trocada' + (changed > 1 ? 's' : '') : '') + (gone ? ' · ' + gone + ' apagada' + (gone > 1 ? 's' : '') : '');
+      var total = g.id === 'home' ? g.items.length : projectCount(g.id);
+      sm.textContent = g.title + ' · ' + total + (g.id === 'home' ? '' : '/' + MAXP) + (changed ? ' · ' + changed + ' trocada' + (changed > 1 ? 's' : '') : '') + (gone ? ' · ' + gone + ' apagada' + (gone > 1 ? 's' : '') : '');
       d.appendChild(sm); d.open = !!openGroups[g.id];
       function fill() {
         if (d.dataset.filled) return; d.dataset.filled = '1';
+        if (g.id !== 'home') {
+          var full = projectCount(g.id) >= MAXP, add = document.createElement('div'); add.className = 'add';
+          var a1 = document.createElement('button'); a1.type = 'button'; a1.textContent = '+ Do computador'; a1.disabled = full;
+          a1.addEventListener('click', function () { pickFor = { add: g.id }; fileIn.click(); });
+          var a2 = document.createElement('button'); a2.type = 'button'; a2.textContent = '+ Do arquivo'; a2.disabled = full;
+          a2.addEventListener('click', function () { openArchive({ add: g.id }, g.id, 'Escolha uma foto para juntar a ' + g.title + '.'); });
+          var nt = document.createElement('small'); nt.textContent = full ? 'Já tem ' + MAXP + ' fotos: apague uma para juntar outra.' : 'Juntar foto (' + projectCount(g.id) + ' de ' + MAXP + ')';
+          add.appendChild(nt); add.appendChild(a1); add.appendChild(a2); d.appendChild(add);
+        }
         g.items.forEach(function (it) {
           var row = document.createElement('div'); row.className = 'ph' + (photos[it.k] ? ' sk-changed' : '') + (deleted[it.k] ? ' sk-gone' : '');
           var im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.src = photoSrc(it.k, it.path);
@@ -311,9 +423,13 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
             box.appendChild(lab); box.appendChild(acts); row.appendChild(im); row.appendChild(box); d.appendChild(row);
             return;
           }
-          var b1 = document.createElement('button'); b1.type = 'button'; b1.textContent = 'Trocar';
+          var tr = document.createElement('small'); tr.textContent = 'Trocar por foto…'; box.appendChild(tr);
+          var b1 = document.createElement('button'); b1.type = 'button'; b1.textContent = 'Do computador';
           b1.addEventListener('click', function () { pickFor = it.k; fileIn.click(); });
           acts.appendChild(b1);
+          var b3 = document.createElement('button'); b3.type = 'button'; b3.textContent = 'Do arquivo';
+          b3.addEventListener('click', function () { openArchive({ k: it.k }, g.id === 'home' ? it.k.split('/')[0] : g.id, 'Escolha a foto que fica no lugar de "' + lab.textContent + '".'); });
+          acts.appendChild(b3);
           var bx = document.createElement('button'); bx.type = 'button'; bx.className = 'ghost'; bx.textContent = 'Apagar';
           bx.addEventListener('click', function () {
             if (bx.dataset.sure) return deletePhoto(it.k, it.path, true);
@@ -325,7 +441,20 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
             b2.addEventListener('click', function () { revertPhoto(it.k); });
             acts.appendChild(b2);
           }
-          box.appendChild(lab); box.appendChild(acts); row.appendChild(im); row.appendChild(box); d.appendChild(row);
+          box.insertBefore(lab, box.firstChild); box.appendChild(acts); row.appendChild(im); row.appendChild(box); d.appendChild(row);
+        });
+        (added[g.id] || []).forEach(function (a) {
+          var row = document.createElement('div'); row.className = 'ph sk-changed';
+          var im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.src = addedSrc(a) || '';
+          var box = document.createElement('div'), lab = document.createElement('span');
+          lab.textContent = 'Nova — ' + (a.src.indexOf('repo:') === 0 ? 'arquivo ' + a.src.split('/').pop().replace(/\.jpe?g$/i, '') : 'do computador');
+          var acts = document.createElement('div'); acts.className = 'acts';
+          var bx = document.createElement('button'); bx.type = 'button'; bx.className = 'ghost'; bx.textContent = 'Apagar';
+          bx.addEventListener('click', function () {
+            if (bx.dataset.sure) return removeAdded(g.id, a.id);
+            bx.dataset.sure = '1'; bx.textContent = 'Apagar? Clique outra vez';
+          });
+          acts.appendChild(bx); box.appendChild(lab); box.appendChild(acts); row.appendChild(im); row.appendChild(box); d.appendChild(row);
         });
       }
       d.addEventListener('toggle', function () { openGroups[g.id] = d.open; if (d.open) fill(); });
@@ -390,7 +519,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     sheetBody.innerHTML = ''; sheetBody.appendChild(document.importNode(t.content, true));
     var l = lang();
     sheetBody.querySelectorAll('[data-' + l + ']').forEach(function (el) { if (!el.dataset.skKey) el.innerHTML = el.getAttribute('data-' + l); });
-    scan(sheetBody); sheetBody.scrollTop = 0;
+    scan(sheetBody); showAdded(); sheetBody.scrollTop = 0;
     sheet.classList.add('open'); sheet.setAttribute('aria-hidden', 'false');
     return true;
   }
@@ -401,7 +530,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   ['click', 'pointerdown', 'mousedown', 'touchstart'].forEach(function (t) {
     window.addEventListener(t, function (ev) {
       var tg = ev.target;
-      if (!tg.closest || tg.closest('#sk-ed,#sk-panel,#sk-colors,#sk-photos,.lang')) return;
+      if (!tg.closest || tg.closest('#sk-ed,#sk-panel,#sk-colors,#sk-photos,#sk-arch,.lang')) return;
       if (t === 'click' && tg.closest('.sheet .back')) { ev.preventDefault(); closePlace(); return; }
       if (!editing) {
         var a = t === 'click' && tg.closest('a[href]'), m = a && a.getAttribute('href').match(/(?:^|\/)lugares\/([a-z0-9-]+)\.html/);
@@ -451,8 +580,9 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
         lines.push('   DEPOIS: ' + plain(e[p[0]]), '');
       });
     });
-    Object.keys(photos).forEach(function (k) { n++; lines.push(n + '. [FOTO] ' + k + ' (substituída — só vai no ficheiro)', ''); });
+    Object.keys(photos).forEach(function (k) { n++; lines.push(n + '. [FOTO] ' + k + (String(photos[k]).indexOf('repo:') === 0 ? ' → ' + photos[k].slice(5) : ' (substituída por uma do computador — só vai no ficheiro)'), ''); });
     Object.keys(deleted).forEach(function (k) { n++; lines.push(n + '. [FOTO APAGADA] ' + k, ''); });
+    Object.keys(added).forEach(function (sl) { added[sl].forEach(function (a) { n++; lines.push(n + '. [FOTO NOVA] ' + sl + ': ' + (a.src.indexOf('repo:') === 0 ? a.src.slice(5) : 'do computador (só vai no ficheiro)'), ''); }); });
     Object.keys(colors).forEach(function (v) { n++; lines.push(n + '. [COR] ' + v + ': ' + defaults[v] + ' → ' + colors[v], ''); });
     if (!n) lines.push('(nenhuma alteração)');
     lines.push('#sakim-edits ' + JSON.stringify(Object.keys(edits).map(function (k) { return edits[k]; })));
@@ -472,10 +602,12 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   $('sk-file-dl').addEventListener('click', function () {
     var ph = {};
     Object.keys(photos).forEach(function (k) {
-      var img = document.querySelector('img[data-sk-img="' + k.replace(/"/g, '') + '"]');
-      ph[k] = { path: img ? img.getAttribute('data-sk-src') : k, data: photos[k] };
+      var path = /^[^/]+\/[^/]+$/.test(k) ? 'assets/img/lugares/' + k : k, v = String(photos[k]);
+      ph[k] = v.indexOf('repo:') === 0 ? { path: path, from_repo: v.slice(5) } : { path: path, data: v };
     });
-    var data = { kind: 'sakim-lab-edits', version: 1, date: new Date().toISOString(), texts: Object.keys(edits).map(function (k) { return edits[k]; }), photos: ph, deleted: deleted, colors: colors };
+    var ad = {};
+    Object.keys(added).forEach(function (sl) { ad[sl] = added[sl].map(function (a) { return a.src.indexOf('repo:') === 0 ? { from_repo: a.src.slice(5) } : { data: addedData[a.id] }; }); });
+    var data = { kind: 'sakim-lab-edits', version: 2, date: new Date().toISOString(), texts: Object.keys(edits).map(function (k) { return edits[k]; }), photos: ph, added: ad, deleted: deleted, colors: colors };
     download('sakim-alteracoes-' + today() + '.json', JSON.stringify(data, null, 1), 'application/json');
   });
   $('sk-close').addEventListener('click', function () { panel.hidden = true; });
@@ -487,7 +619,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   });
   $('sk-clear').addEventListener('click', function () {
     if (!confirmClear) { confirmClear = true; this.textContent = 'Tem a certeza? Clique outra vez'; return; }
-    edits = {}; photos = {}; colors = {}; deleted = {}; writeLS(KEY, edits); writeLS(CKEY, colors); writeLS(DKEY, deleted); idbClear();
+    edits = {}; photos = {}; colors = {}; deleted = {}; added = {}; writeLS(KEY, edits); writeLS(CKEY, colors); writeLS(DKEY, deleted); writeLS(AKEY, added); idbClear();
     setTimeout(function () { location.reload(); }, 150);
   });
   /* the page as it looks now, without the editor */
@@ -507,8 +639,13 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
       var path = im.getAttribute('data-sk-src') || (im.getAttribute('src') || '').replace(/^(\.\.\/)+/, '').split('?')[0];
       var k = path && imgKey(path);
       if (k && deleted[k]) { (im.closest('figure.g') || im).remove(); return; }
-      if (k && photos[k]) im.setAttribute('src', photos[k]);
+      if (k && photos[k]) im.setAttribute('src', resolve(photos[k]));
       else if (!im.getAttribute('src') && window.SK_IMG && SK_IMG[path]) im.setAttribute('src', SK_IMG[path]);
+    });
+    /* new photos go at the end of their project's gallery */
+    Object.keys(added).forEach(function (sl) {
+      var t = c.querySelector('template#place-' + sl), gal = t && t.content.querySelector('.gallery');
+      if (gal) added[sl].forEach(function (a) { var f = addedFigure(a); f.classList.remove('sk-added'); f.querySelector('img').removeAttribute('data-sk-add'); gal.appendChild(f); });
     });
     download('sakim-lab-' + today() + '.html', '<!doctype html>\n' + c.outerHTML, 'text/html');
   });
@@ -519,7 +656,8 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     applyColors();
     scan(document); status();
     idbOpen().then(idbAll).then(function (all) {
-      photos = all || {};
+      photos = {}; addedData = {};
+      Object.keys(all || {}).forEach(function (k) { if (k.indexOf('add/') === 0) addedData[k.slice(4)] = all[k]; else photos[k] = all[k]; });
       document.querySelectorAll('img[data-sk-img]').forEach(function (img) { if (photos[img.dataset.skImg]) showPhoto(img); });
       status();
     });
