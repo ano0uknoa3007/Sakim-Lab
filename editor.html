@@ -1066,7 +1066,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
 <div id="sk-panel" hidden>
   <div class="box" role="dialog" aria-modal="true" aria-labelledby="sk-ph">
     <h2 id="sk-ph">As suas alterações</h2>
-    <p id="sk-help">Para aplicar ao site: descarregue o ficheiro e envie-o ao Claude. Se só mudou textos, também pode copiar e colar o texto.</p>
+    <p id="sk-help">Para aplicar ao site: "Descarregar ficheiro" descarrega o ficheiro de alterações e, à parte, cada foto do seu computador (o navegador pode pedir autorização para várias transferências). Envie ao Claude o ficheiro e essas fotos. Se só mudou textos, também pode copiar e colar o texto.</p>
     <textarea id="sk-out" readonly></textarea>
     <div class="row">
       <button type="button" class="pri" id="sk-file-dl">Descarregar ficheiro</button>
@@ -1559,16 +1559,36 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     out.value = report(); panel.hidden = false; confirmClear = false;
     $('sk-clear').textContent = 'Apagar todas as alterações';
   });
+  /* the changes file stays small: a photo from the computer is downloaded as its own file, and the changes file names it */
+  function dataBlob(v) {
+    var m = v.match(/^data:([^;,]+)(;base64)?,(.*)$/); if (!m) return null;
+    var raw = m[2] ? atob(m[3]) : decodeURIComponent(m[3]), b = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) b[i] = raw.charCodeAt(i);
+    return { blob: new Blob([b], { type: m[1] }), ext: { 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif', 'image/heic': 'heic' }[m[1]] || 'jpg' };
+  }
   $('sk-file-dl').addEventListener('click', function () {
-    var ph = {};
+    var ph = {}, files = [];
+    function file(name, v) { var d = dataBlob(v); if (!d) return null; name += '.' + d.ext; files.push({ name: name, blob: d.blob }); return name; }
     Object.keys(photos).forEach(function (k) {
       var path = /^[^/]+\/[^/]+$/.test(k) ? 'assets/img/lugares/' + k : k, v = String(photos[k]);
-      ph[k] = v.indexOf('repo:') === 0 ? { path: path, from_repo: v.slice(5) } : { path: path, data: v };
+      ph[k] = v.indexOf('repo:') === 0 ? { path: path, from_repo: v.slice(5) } : { path: path, file: file('sakim-foto--' + k.replace(/\.[a-z]+$/i, '').replace(/[^a-z0-9-]+/gi, '--'), v) };
     });
     var ad = {};
-    Object.keys(added).forEach(function (sl) { ad[sl] = added[sl].map(function (a) { return a.src.indexOf('repo:') === 0 ? { from_repo: a.src.slice(5) } : { data: addedData[a.id] }; }); });
-    var data = { kind: 'sakim-lab-edits', version: 2, date: new Date().toISOString(), texts: Object.keys(edits).map(function (k) { return edits[k]; }), photos: ph, added: ad, deleted: deleted, colors: colors };
+    Object.keys(added).forEach(function (sl) {
+      var n = 0;
+      ad[sl] = added[sl].map(function (a) { return a.src.indexOf('repo:') === 0 ? { from_repo: a.src.slice(5) } : { file: file('sakim-nova--' + sl + '--' + (++n), addedData[a.id] || '') }; });
+    });
+    var data = { kind: 'sakim-lab-edits', version: 3, date: new Date().toISOString(), texts: Object.keys(edits).map(function (k) { return edits[k]; }), photos: ph, added: ad, deleted: deleted, colors: colors };
     download('sakim-alteracoes-' + today() + '.json', JSON.stringify(data, null, 1), 'application/json');
+    /* one file at a time: browsers may ask once to allow several downloads */
+    files.forEach(function (f, i) {
+      setTimeout(function () {
+        var a = document.createElement('a'), url = URL.createObjectURL(f.blob);
+        a.href = url; a.download = f.name; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 8000);
+      }, 500 * (i + 1));
+    });
+    st.textContent = files.length ? 'A descarregar 1 ficheiro + ' + files.length + (files.length === 1 ? ' foto' : ' fotos') : 'Ficheiro descarregado';
   });
   $('sk-close').addEventListener('click', function () { panel.hidden = true; });
   $('sk-copy').addEventListener('click', function () {
