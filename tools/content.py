@@ -17,8 +17,8 @@ START = ("Iniciar Projecto", "Start Your Project")
 HERO = {
     "eyebrow": ("Estúdio de Conceito de Hospitalidade", "Hospitality Concept Studio"),
     "title": ("Onde o <em>Conceito</em><br>se Torna<br>Experiência.", "Where <em>Concept</em><br>Becomes<br>Experience."),
-    "sub": ("A Sakim Lab define restaurantes, bares e espaços de hospitalidade — do posicionamento inicial até ao dia de abertura.",
-            "Sakim Lab shapes restaurants, bars, and hospitality spaces — from initial positioning through to opening day."),
+    "sub": ("A Sakim Lab define novos conceitos de hospitalidade.",
+            "Sakim Lab defines new hospitality concepts."),
     "services": ("Os Nossos Serviços", "Our Services"),
 }
 
