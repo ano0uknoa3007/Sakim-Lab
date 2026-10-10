@@ -142,7 +142,7 @@ def shell(page, root, title, desc, body, head=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
-<meta name="theme-color" content="#fecb3e">
+<meta name="theme-color" content="#ffaa00">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
 <link rel="icon" href="{root}{SITE_PHOTOS[2]}">
@@ -246,7 +246,8 @@ HEADLINE_PICS = [("a-tabacaria", "balcao"), ("so-what", "abobada-acesa"), ("soci
                  ("a-tabacaria", "fachada"), ("so-what", "telefone-vermelho"), ("social-b", "bartenders"),
                  ("a-tabacaria", "sala-a-noite"), ("so-what", "sala-cheia"), ("social-b", "musica"),
                  ("a-tabacaria", "ultima-luz"), ("so-what", "tunel-vermelho"), ("social-b", "balcao-rosas")]
-CONTACT_PICS = [("sakim", "mesa-longa"), ("so-what", "mesa-posta"), ("a-tabacaria", "espuma"), ("o-terraco", "hora-azul")]
+# a name starting "arquivo/" is a photo from that project's archive (assets/img/lugares/<project>/arquivo/)
+CONTACT_PICS = [("so-what", "arquivo/img-502"), ("so-what", "mesa-posta"), ("a-tabacaria", "espuma"), ("so-what", "telefone-vermelho")]
 
 
 def hero_photos():
@@ -272,7 +273,7 @@ def hero_drift(cols=6):
 
 
 def pics_of(lst):
-    return [(photo(s, n)[0], PROJECT_TEXT[s]["name"]) for s, n in lst]
+    return [(f"assets/img/lugares/{s}/{n}.jpg" if n.startswith("arquivo/") else photo(s, n)[0], PROJECT_TEXT[s]["name"]) for s, n in lst]
 
 
 def press_section():
