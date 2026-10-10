@@ -24,8 +24,8 @@ HERO = {
 
 STUDIO = {
     "label": ("O Estúdio", "The Studio"),
-    "quote": ("“Um conceito sem estratégia é teatro. Estratégia sem conceito é mecanismo.”",
-              "“A concept without strategy is theatre. Strategy without concept is machinery.”"),
+    "quote": ("“Um bom conceito é estratégia, arte, design e alma.”",
+              "“A good concept is strategy, art, design and soul.”"),
     "body": ("A Sakim Lab é um estúdio criativo de hospitalidade que trabalha com fundadores, investidores e operadores que pretendem construir espaços com significado.",
              "Sakim Lab is a creative hospitality studio working with restaurant founders, investors, and operators who want to build spaces with meaning."),
     "stats": [("11+", ("Conceitos Lançados", "Concepts Launched")),

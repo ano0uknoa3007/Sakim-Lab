@@ -64,7 +64,7 @@ html.sk-editing [data-sk-key].sk-changed{outline-color:#2b8a3e}
   }
   function scan(r) { r.querySelectorAll('[data-pt][data-en]').forEach(tag); if (r.matches && r.matches('[data-pt][data-en]')) tag(r); }
   function clean(html) {
-    return html.replace(/<span class="ch[^"]*">([^<]*)<\/span>/g, '$1').replace(/&nbsp;/g, ' ')
+    return html.replace(/<span class="ch acc">([^<]*)<\/span>/g, '<span class="acc">$1</span>').replace(/<span class="ch">([^<]*)<\/span>/g, '$1').replace(/&nbsp;/g, ' ')
       .replace(/(<br\s*\/?>\s*)+$/, '').replace(/<(\/?)b>/g, '<$1strong>').replace(/<(\/?)i>/g, '<$1em>').trim();
   }
   function save(el) {
