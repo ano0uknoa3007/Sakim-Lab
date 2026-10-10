@@ -16,8 +16,8 @@ START = ("Iniciar Projecto", "Start Your Project")
 
 HERO = {
     "eyebrow": ("Estúdio de Conceito de Hospitalidade", "Hospitality Concept Studio"),
-    "title": ("Onde o <em>Conceito</em><br>se Torna<br>Experiência.", "Where <em>Concept</em><br>Becomes<br>Experience."),
-    "sub": ("A Sakim Lab define novos conceitos de hospitalidade.",
+    "title": ("Onde o <em>Conceito</em><br>se Torna<br>uma Experiência.", "Where <em>Concept</em><br>Becomes<br>an Experience."),
+    "sub": ("O Sakim Lab define novos conceitos de hospitalidade.",
             "Sakim Lab defines new hospitality concepts."),
     "services": ("Os Nossos Serviços", "Our Services"),
 }
@@ -29,14 +29,14 @@ STUDIO = {
     "body": ("A Sakim Lab é um estúdio criativo de hospitalidade que trabalha com fundadores, investidores e operadores que pretendem construir espaços com significado.",
              "Sakim Lab is a creative hospitality studio working with restaurant founders, investors, and operators who want to build spaces with meaning."),
     "stats": [("11+", ("Conceitos Lançados", "Concepts Launched")),
-              ("3", ("Países", "Countries")),
+              ("2", ("Países", "Countries")),
               ("End-to-end", ("Abordagem", "Studio Approach"))],
 }
 
 SERVICES = {
     "label": ("O Que Fazemos", "What We Do"),
     "title": ("Da Primeira Ideia à <em>Noite de Abertura</em>", "From First Idea to <em>Opening Night</em>"),
-    "body": ("A Sakim Lab trabalha em quatro áreas interligadas de desenvolvimento de hospitalidade.",
+    "body": ("O Sakim Lab trabalha em quatro áreas interligadas de desenvolvimento de hospitalidade.",
              "Sakim Lab works across four interconnected areas of hospitality development."),
     "areas": [
         {
@@ -71,8 +71,8 @@ SERVICES = {
                  ("Desenvolvimento de menu enraizado na coerência do conceito, viabilidade operacional e experiência do cliente.",
                   "Menu development rooted in concept coherence, operational viability, and guest experience.")),
                 (("Estratégia de Bebidas & Vinho", "Beverage & Wine Strategy"),
-                 ("Construção de carta de vinhos, programa de bebidas e seleção de fornecedores.",
-                  "Wine list construction, beverage programme, and supplier sourcing.")),
+                 ("Construção de carta de vinhos, cocktails, programa de bebidas e seleção de fornecedores.",
+                  "Wine list construction, cocktails, beverage programme, and supplier sourcing.")),
                 (("Desenvolvimento de Bar", "Bar Concept Development"),
                  ("Desenvolvimento criativo e operacional completo de conceitos de bar — direção de cocktails, arquitetura de lista, estilo de serviço.",
                   "Full creative and operational development of bar concepts — cocktail direction, list architecture, service style.")),
@@ -89,8 +89,8 @@ SERVICES = {
             "photo": ("so-what", "abobada-acesa"),
             "items": [
                 (("Direção de Interior & Atmosfera", "Interior & Atmosphere Direction"),
-                 ("Direção criativa para o espaço físico — garantindo que o conceito está presente em cada decisão.",
-                  "Creative direction for the physical space — ensuring the concept is present in every decision.")),
+                 ("Direção criativa para o espaço físico — garantindo que o conceito está presente em cada decisão: decoração, mobiliário e iluminação.",
+                  "Creative direction for the physical space — ensuring the concept is present in every decision: decoration, furniture and lighting.")),
                 (("Seleção de Fornecedores", "Supplier Sourcing"),
                  ("Identificar os fornecedores certos cuja qualidade e valores estejam alinhados com o projeto.",
                   "Identifying the right suppliers whose quality and values align with the project.")),
@@ -334,10 +334,10 @@ MIKAS = {
     "label": ("Quem Está à Mesa", "Who's at the Table"),
     "text": ("Por trás da Sakim Lab está <strong>Mikas</strong>, moçambicano, há mais de trinta anos a fazer a noite de Lisboa. "
              "Quando a Bica era ainda um bairro fechado sobre si mesmo, abriu lá o W.I.P. — bar, loja de roupa e cabeleireiro ao mesmo tempo. "
-             "Seguiu-se o Bicaense, e a noite da Bica nunca mais foi a mesma.",
+             "Seguiu-se o Bicaense, e a noite de Lisboa nunca mais foi a mesma.",
              "Behind Sakim Lab is <strong>Mikas</strong>, Mozambican, shaping Lisbon's nights for more than thirty years. "
              "When Bica was still a neighbourhood closed in on itself, he opened W.I.P. there — a bar, a clothes shop and a hairdresser all at once. "
-             "Then came Bicaense, and nights in Bica were never the same again."),
+             "Then came Bicaense, and nights in Lisbon were never the same again."),
     "source": ("Segundo o Público, 2010", "According to Público, 2010"),
     "source_url": "https://www.publico.pt/2010/06/27/culturaipsilon/noticia/mikas-uma-historia-do-cerco-de-lisboa-259846",
 }

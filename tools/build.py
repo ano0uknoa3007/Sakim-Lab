@@ -142,7 +142,7 @@ def shell(page, root, title, desc, body, head=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
-<meta name="theme-color" content="#e9e6e0">
+<meta name="theme-color" content="#fecb3e">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
 <link rel="icon" href="{root}{SITE_PHOTOS[2]}">
@@ -415,7 +415,7 @@ def build_home():
   </section>"""
 
     # PROCESS: an evening, from 18:00 to opening; the steps lie along one line and the section goes from day to night
-    times = ["18:00", "19:30", "21:00", "22:30", "00:00"]
+    times = ["10:00", "10:30", "11:30", "12:30", "13:30"]
     steps = []
     for i, ((n, d), hour) in enumerate(zip(PROCESS["steps"], times)):
         steps.append(f"""
