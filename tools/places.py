@@ -278,11 +278,11 @@ PLACES = [
             (179, "electrico", "O eléctrico a passar pela esplanada", "The tram passing the terrace"),
             (188, "largo-ao-anoitecer", "O largo ao anoitecer", "The little square at dusk"),
             (175, "mural", "O mural: a alegria é a coisa mais séria da vida", "The mural: joy is the most serious thing in life"),
-            (181, "porta-aberta", "A porta aberta para o largo", "The door open onto the square"),
+            (181, "porta-aberta", "Poltronas junto à porta aberta, sob o tecto decorado", "Armchairs by the open door, under the decorated ceiling"),
             (183, "parede-amarela", "Uma parede amarela com grafitti", "A yellow wall with graffiti"),
             (178, "lata", "Um candeeiro feito de lata de sopa", "A lamp made from a soup can"),
             (190, "chapeus", "Dois amigos de chapéu à mesa", "Two friends in hats at a table"),
-            (189, "noite", "A esplanada cheia à noite", "The terrace full at night"),
+            (189, "noite", "O balcão e a sala por dentro", "The bar counter and the room inside"),
         ],
     },
     {
@@ -312,7 +312,7 @@ PLACES = [
             (114, "vitrine", "A vitrine de queijos e doces", "The cheese and pastry counter"),
             (105, "tabua", "Enchidos, queijo e um copo de vinho", "Charcuterie, cheese and a glass of wine"),
             (120, "vinhos", "Paredes de vinho", "Walls of wine"),
-            (119, "velas", "Velas acesas nas mesas", "Candles lit on the tables"),
+            (119, "velas", "Prateleiras de produtos e o balcão ao fundo", "Shelves of goods and the counter at the back"),
         ],
     },
     {
