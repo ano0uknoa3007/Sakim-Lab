@@ -742,7 +742,7 @@
       });
     }
 
-    /* the headline (each letter where the page puts it, the blue stop, the photo) painted into a picture */
+    /* the headline (each letter where the page puts it, the orange stop, the photo) painted into a picture */
     function paintText() {
       if (!gl) return;
       var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -940,7 +940,7 @@
     }, { passive: true });
   })();
 
-  /* ---------- SERVICES: each area opens; on hover its name turns blue and its icon moves ---------- */
+  /* ---------- SERVICES: each area opens; on hover its name turns orange and its icon moves ---------- */
   (function services() {
     var ol = $('.areas');
     if (!ol) return;
@@ -955,7 +955,7 @@
         if (window.ScrollTrigger) setTimeout(function () { ScrollTrigger.refresh(); }, 750);
       });
     });
-    /* hover marks the area under the cursor (name in blue, the icon moves) and dims the others */
+    /* hover marks the area under the cursor (name in orange, the icon moves) and dims the others */
     areas.forEach(function (a) {
       a.addEventListener('pointerenter', function (e) {
         if (e.pointerType !== 'mouse') return;
