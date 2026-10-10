@@ -351,7 +351,7 @@ def build_home():
     </div>
   </section>"""
 
-    # SERVICES: four big lines; on hover the name turns orange and the icon moves
+    # SERVICES: four big lines; on hover the name turns blue and the icon moves
     areas = []
     for k, a in enumerate(SERVICES["areas"]):
         items = "".join(f'<li>{icon(ic, "item-icon")}{tp(n, "h4")}{tp(d, "p")}</li>'
