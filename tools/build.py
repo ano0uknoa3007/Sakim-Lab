@@ -635,7 +635,13 @@ def main():
     for p in PLACES:
         for j in range(len(p["photos"])):
             assert os.path.exists(os.path.join(ROOT, photo_path(p, j))), photo_path(p, j)
-    write("index.html", build_home())
+    home = build_home()
+    write("index.html", home)
+    # editor.html: the home page with every text editable in place (see tools/editor.html)
+    with open(os.path.join(ROOT, "tools", "editor.html"), encoding="utf-8") as f:
+        editor = f.read()
+    write("editor.html", home.replace("<head>\n", '<head>\n<meta name="robots" content="noindex">\n', 1)
+          .replace("</body>", editor + "</body>", 1))
     write("contacto.html", build_contact())
     for n, slug in enumerate(PROJECT_ORDER, 1):
         write(f"lugares/{slug}.html", build_place(slug, n))

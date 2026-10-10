@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sakim Lab — Estúdio de Conceito de Hospitalidade</title>
+<meta name="description" content="A Sakim Lab define novos conceitos de hospitalidade.">
+<meta name="theme-color" content="#e9e6e0">
+<meta property="og:title" content="Sakim Lab — Estúdio de Conceito de Hospitalidade">
+<meta property="og:description" content="A Sakim Lab define novos conceitos de hospitalidade.">
+<link rel="icon" href="assets/img/marca/sakim-logo.jpg">
+<link rel="preload" href="assets/fonts/anton.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/newsreader-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/site.css?v=831a8880">
+<script src="assets/js/gsap.min.js?v=5e6e6cba" defer></script>
+<script src="assets/js/ScrollTrigger.min.js?v=00a3e5c7" defer></script>
+<script src="assets/js/lenis.min.js?v=81fb34b5" defer></script>
+<script src="assets/js/site.js?v=a5d40e53" defer></script>
+<script>try{if((!location.hash||location.hash==='#top')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-on')}catch(e){}</script>
+</head>
+<body class="no-js" data-page="home">
+<a class="skip" href="#main" data-pt="Saltar para o conteúdo" data-en="Skip to content">Saltar para o conteúdo</a>
+<div class="cursor" aria-hidden="true"><span></span></div>
+<header class="bar">
+  <a href="index.html#top" class="pill pill-logo" aria-label="Sakim Lab"><span class="pill-icon"><img src="assets/img/marca/sakim-logo.jpg" alt=""></span><span>Sakim Lab</span></a>
+  <nav class="pill pill-links" aria-label="Menu">
+      <a href="#estudio" data-sec="estudio" data-pt="Estúdio" data-en="Studio">Estúdio</a>
+      <a href="#servicos" data-sec="servicos" data-pt="Serviços" data-en="Services">Serviços</a>
+      <a href="#projectos" data-sec="projectos" data-pt="Projectos" data-en="Projects">Projectos</a>
+      <a href="#processo" data-sec="processo" data-pt="Processo" data-en="Process">Processo</a>
+      <a href="#sobre" data-sec="sobre" data-pt="Sobre" data-en="About">Sobre</a>
+  </nav>
+  <div class="pill pill-lang lang" role="group" aria-label="Idioma / Language">
+    <button type="button" data-lang="pt" class="on">PT</button><button type="button" data-lang="en">EN</button>
+  </div>
+  <button type="button" class="pill-round menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Menu"><i></i></button>
+</header>
+<aside class="menu" id="menu" aria-hidden="true">
+  <div class="menu-scrim" data-close-menu></div>
+  <div class="menu-panel">
+    <button type="button" class="menu-close mono" data-close-menu data-pt="Fechar ✕" data-en="Close ✕">Fechar ✕</button>
+    <nav>
+      <a href="#estudio" data-pt="Estúdio" data-en="Studio">Estúdio</a>
+      <a href="#servicos" data-pt="Serviços" data-en="Services">Serviços</a>
+      <a href="#projectos" data-pt="Projectos" data-en="Projects">Projectos</a>
+      <a href="#processo" data-pt="Processo" data-en="Process">Processo</a>
+      <a href="#sobre" data-pt="Sobre" data-en="About">Sobre</a>
+      <a href="#contacto" data-pt="Contacto" data-en="Contact">Contacto</a>
+    </nav>
+    <a class="btn" href="contacto.html" data-pt="Iniciar Projecto" data-en="Start Your Project">Iniciar Projecto</a>
+  </div>
+</aside>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-scrim" data-close></div>
+  <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <div class="drawer-top">
+      <div><span class="mono" data-pt="Contacto" data-en="Contact">Contacto</span>
+      <h2 id="drawer-title" data-pt="Pronto para Construir &lt;em&gt;Algo Real?&lt;/em&gt;" data-en="Ready to Build &lt;em&gt;Something Real?&lt;/em&gt;">Pronto para Construir <em>Algo Real?</em></h2></div>
+      <button type="button" class="drawer-close" data-close aria-label="Fechar / Close">×</button>
+    </div>
+    <div class="chat" id="booking" aria-live="polite">
+      <div class="chat-head">
+        <img src="assets/img/marca/sakim-logo.jpg" alt="">
+        <div><strong>Sakim</strong><span class="mono" data-pt="Responde em pessoa" data-en="Replies in person">Responde em pessoa</span></div>
+        <button type="button" class="chat-restart mono" hidden data-pt="Recomeçar" data-en="Start again">Recomeçar</button>
+      </div>
+      <div class="chat-log" id="chat-log"></div>
+      <div class="chat-input" id="chat-input"></div>
+      <noscript><p class="chat-msg"><span data-pt="Escreva-nos para" data-en="Write to us at">Escreva-nos para</span> <a href="mailto:studio@sakinlab.com">studio@sakinlab.com</a>.</p></noscript>
+    </div>
+  <script type="application/json" id="booking-data">{"whatsapp": "351913915323", "email": "studio@sakinlab.com", "services": [{"id": "A", "pt": "Conceito & Posicionamento", "en": "Concept & Positioning"}, {"id": "B", "pt": "Comida, Bebida & Experiência", "en": "Food, Beverage & Experience"}, {"id": "C", "pt": "Espaço, Configuração & Operações", "en": "Space, Setup & Operations"}, {"id": "D", "pt": "Equipa, Lançamento & Consultoria", "en": "Team, Launch & Advisory"}]}</script>
+  </aside>
+</div>
+<a class="dock" href="contacto.html">
+  <img src="assets/img/lugares/a-tabacaria/balcao.jpg" alt="">
+  <span><b data-pt="Iniciar Projecto" data-en="Start Your Project">Iniciar Projecto</b><small data-pt="[Uma conversa à mesa]" data-en="[A conversation at the table]">[Uma conversa à mesa]</small></span>
+</a>
+<div class="sheet" id="sheet" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="sheet-bar"><button type="button" class="pill pill-back back" data-pt="← Voltar" data-en="← Back">← Voltar</button></div>
+  <div class="sheet-body" data-lenis-prevent></div>
+</div>
+<div class="intro" aria-hidden="true">
+  <div class="intro-bg"></div>
+  <div class="intro-mark"><span class="intro-dot"><img src="assets/img/marca/sakim-logo.jpg" alt=""></span><span class="intro-word"><span>Sakim Lab</span></span></div>
+  <div class="intro-win"><img alt=""><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i></div>
+</div>
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="hero-drift" aria-hidden="true"><div class="drift-col"><img src="assets/img/mini/a-tabacaria/balcao.jpg" alt="" loading="eager"><img src="assets/img/mini/afro-taska/mesas.jpg" alt="" loading="eager"><img src="assets/img/mini/so-what/abobada-acesa.jpg" alt="" loading="eager"><img src="assets/img/mini/social-b/petiscos.jpg" alt="" loading="lazy"><img src="assets/img/mini/ricucu/bar-a-noite.jpg" alt="" loading="lazy"><img src="assets/img/mini/a-tabacaria/balcao.jpg" alt="" loading="lazy"><img src="assets/img/mini/afro-taska/mesas.jpg" alt="" loading="lazy"><img src="assets/img/mini/so-what/abobada-acesa.jpg" alt="" loading="lazy"><img src="assets/img/mini/social-b/petiscos.jpg" alt="" loading="lazy"><img src="assets/img/mini/ricucu/bar-a-noite.jpg" alt="" loading="lazy"></div><div class="drift-col"><img src="assets/img/mini/o-terraco/por-do-sol.jpg" alt="" loading="eager"><img src="assets/img/mini/house-4/corredor-rosa.jpg" alt="" loading="eager"><img src="assets/img/mini/sakim/sala-comprida.jpg" alt="" loading="eager"><img src="assets/img/mini/o-larguinho/parede-amarela.jpg" alt="" loading="lazy"><img src="assets/img/mini/velha-senhora/jantar.jpg" alt="" loading="lazy"><img src="assets/img/mini/o-terraco/por-do-sol.jpg" alt="" loading="lazy"><img src="assets/img/mini/house-4/corredor-rosa.jpg" alt="" loading="lazy"><img src="assets/img/mini/sakim/sala-comprida.jpg" alt="" loading="lazy"><img src="assets/img/mini/o-larguinho/parede-amarela.jpg" alt="" loading="lazy"><img src="assets/img/mini/velha-senhora/jantar.jpg" alt="" loading="lazy"></div><div class="drift-col"><img src="assets/img/mini/bica-me/velas.jpg" alt="" loading="eager"><img src="assets/img/mini/monte-da-lua/cabana-a-noite.jpg" alt="" loading="eager"><img src="assets/img/mini/a-tabacaria/torneiras.jpg" alt="" loading="eager"><img src="assets/img/mini/afro-taska/bolo.jpg" alt="" loading="lazy"><img src="assets/img/mini/so-what/prato.jpg" alt="" loading="lazy"><img src="assets/img/mini/bica-me/velas.jpg" alt="" loading="lazy"><img src="assets/img/mini/monte-da-lua/cabana-a-noite.jpg" alt="" loading="lazy"><img src="assets/img/mini/a-tabacaria/torneiras.jpg" alt="" loading="lazy"><img src="assets/img/mini/afro-taska/bolo.jpg" alt="" loading="lazy"><img src="assets/img/mini/so-what/prato.jpg" alt="" loading="lazy"></div><div class="drift-col"><img src="assets/img/mini/bicaense/jardim-de-luz.jpg" alt="" loading="eager"><img src="assets/img/mini/clube-ferroviario/navio.jpg" alt="" loading="eager"><img src="assets/img/mini/o-terraco/guitarra.jpg" alt="" loading="eager"><img src="assets/img/mini/house-4/cadeira.jpg" alt="" loading="lazy"><img src="assets/img/mini/sakim/garrafas.jpg" alt="" loading="lazy"><img src="assets/img/mini/bicaense/jardim-de-luz.jpg" alt="" loading="lazy"><img src="assets/img/mini/clube-ferroviario/navio.jpg" alt="" loading="lazy"><img src="assets/img/mini/o-terraco/guitarra.jpg" alt="" loading="lazy"><img src="assets/img/mini/house-4/cadeira.jpg" alt="" loading="lazy"><img src="assets/img/mini/sakim/garrafas.jpg" alt="" loading="lazy"></div><div class="drift-col"><img src="assets/img/mini/social-b/bar-violeta.jpg" alt="" loading="lazy"><img src="assets/img/mini/ricucu/porta-roxa.jpg" alt="" loading="lazy"><img src="assets/img/mini/bica-me/vitrine.jpg" alt="" loading="lazy"><img src="assets/img/mini/monte-da-lua/interior.jpg" alt="" loading="lazy"><img src="assets/img/mini/social-b/bar-violeta.jpg" alt="" loading="lazy"><img src="assets/img/mini/ricucu/porta-roxa.jpg" alt="" loading="lazy"><img src="assets/img/mini/bica-me/vitrine.jpg" alt="" loading="lazy"><img src="assets/img/mini/monte-da-lua/interior.jpg" alt="" loading="lazy"></div><div class="drift-col"><img src="assets/img/mini/o-larguinho/largo-ao-anoitecer.jpg" alt="" loading="lazy"><img src="assets/img/mini/velha-senhora/porta.jpg" alt="" loading="lazy"><img src="assets/img/mini/bicaense/balcao-curvo.jpg" alt="" loading="lazy"><img src="assets/img/mini/clube-ferroviario/concerto.jpg" alt="" loading="lazy"><img src="assets/img/mini/o-larguinho/largo-ao-anoitecer.jpg" alt="" loading="lazy"><img src="assets/img/mini/velha-senhora/porta.jpg" alt="" loading="lazy"><img src="assets/img/mini/bicaense/balcao-curvo.jpg" alt="" loading="lazy"><img src="assets/img/mini/clube-ferroviario/concerto.jpg" alt="" loading="lazy"></div></div>
+    <div class="hero-wash" aria-hidden="true"></div>
+    <h1 class="mega hero-mega" aria-label="Onde o Conceito se Torna Experiência." data-label-pt="Onde o Conceito se Torna Experiência." data-label-en="Where Concept Becomes Experience."><span class="row"><span data-pt="Onde o Conceito" data-en="Where Concept">Onde o Conceito</span></span><span class="row"><span data-pt="se Torna" data-en="Becomes">se Torna</span> <span class="pic" aria-hidden="true"><img class="photo on" src="assets/img/lugares/a-tabacaria/balcao.jpg" alt="" data-name="A Tabacaria" data-meta-pt="Bar · Lisboa" data-meta-en="Bar · Lisbon"><img class="photo" src="assets/img/lugares/so-what/abobada-acesa.jpg" alt="" data-name="So What" data-meta-pt="Bar · Restaurante · Jazz Clube" data-meta-en="Bar · Restaurant · Jazz Club"><img class="photo" src="assets/img/lugares/social-b/bar-violeta.jpg" alt="" data-name="Social B" data-meta-pt="Bar Club · Lisboa" data-meta-en="Bar Club · Lisbon" loading="lazy"><img class="photo" src="assets/img/lugares/a-tabacaria/fachada.jpg" alt="" data-name="A Tabacaria" data-meta-pt="Bar · Lisboa" data-meta-en="Bar · Lisbon" loading="lazy"><img class="photo" src="assets/img/lugares/so-what/telefone-vermelho.jpg" alt="" data-name="So What" data-meta-pt="Bar · Restaurante · Jazz Clube" data-meta-en="Bar · Restaurant · Jazz Club" loading="lazy"><img class="photo" src="assets/img/lugares/social-b/bartenders.jpg" alt="" data-name="Social B" data-meta-pt="Bar Club · Lisboa" data-meta-en="Bar Club · Lisbon" loading="lazy"><img class="photo" src="assets/img/lugares/a-tabacaria/sala-a-noite.jpg" alt="" data-name="A Tabacaria" data-meta-pt="Bar · Lisboa" data-meta-en="Bar · Lisbon" loading="lazy"><img class="photo" src="assets/img/lugares/so-what/sala-cheia.jpg" alt="" data-name="So What" data-meta-pt="Bar · Restaurante · Jazz Clube" data-meta-en="Bar · Restaurant · Jazz Club" loading="lazy"><img class="photo" src="assets/img/lugares/social-b/musica.jpg" alt="" data-name="Social B" data-meta-pt="Bar Club · Lisboa" data-meta-en="Bar Club · Lisbon" loading="lazy"><img class="photo" src="assets/img/lugares/a-tabacaria/ultima-luz.jpg" alt="" data-name="A Tabacaria" data-meta-pt="Bar · Lisboa" data-meta-en="Bar · Lisbon" loading="lazy"><img class="photo" src="assets/img/lugares/so-what/tunel-vermelho.jpg" alt="" data-name="So What" data-meta-pt="Bar · Restaurante · Jazz Clube" data-meta-en="Bar · Restaurant · Jazz Club" loading="lazy"><img class="photo" src="assets/img/lugares/social-b/balcao-rosas.jpg" alt="" data-name="Social B" data-meta-pt="Bar Club · Lisboa" data-meta-en="Bar Club · Lisbon" loading="lazy"></span></span><span class="row row-acc"><span data-pt="Experiência&lt;span class=&quot;acc&quot;&gt;.&lt;/span&gt;" data-en="Experience&lt;span class=&quot;acc&quot;&gt;.&lt;/span&gt;">Experiência<span class="acc">.</span></span></span></h1>
+    <div class="hero-foot">
+      <p class="tag mono pic-name" aria-hidden="true">[ <b>A Tabacaria</b> · <span>Bar · Lisboa</span> ]</p>
+      <p class="hero-sub" data-pt="A Sakim Lab define novos conceitos de hospitalidade." data-en="Sakim Lab defines new hospitality concepts.">A Sakim Lab define novos conceitos de hospitalidade.</p>
+    </div>
+  </section>
+  <section class="editorial" id="estudio">
+    <div class="ed-page">
+      <h2 class="mega mega-s" aria-label="O Estúdio" data-label-pt="O Estúdio" data-label-en="The Studio"><span class="row row-acc"><span data-pt="O Estúdio" data-en="The Studio">O Estúdio</span></span></h2>
+      <blockquote class="ed-title" data-pt="“Um conceito sem estratégia é teatro. Estratégia sem conceito é mecanismo.”" data-en="“A concept without strategy is theatre. Strategy without concept is machinery.”">“Um conceito sem estratégia é teatro. Estratégia sem conceito é mecanismo.”</blockquote>
+      <div class="ed-meta mono"><span><b>11+</b> <span data-pt="Conceitos Lançados" data-en="Concepts Launched">Conceitos Lançados</span></span><span><b>3</b> <span data-pt="Países" data-en="Countries">Países</span></span><span><b>End-to-end</b> <span data-pt="Abordagem" data-en="Studio Approach">Abordagem</span></span></div>
+      <div class="ed-cols">
+        <p data-pt="A Sakim Lab é um estúdio criativo de hospitalidade que trabalha com fundadores, investidores e operadores que pretendem construir espaços com significado." data-en="Sakim Lab is a creative hospitality studio working with restaurant founders, investors, and operators who want to build spaces with meaning.">A Sakim Lab é um estúdio criativo de hospitalidade que trabalha com fundadores, investidores e operadores que pretendem construir espaços com significado.</p>
+        <p data-pt="Trabalhamos com fundadores de restaurantes, operadores hoteleiros e investidores que estão a construir espaços de hospitalidade e pretendem que isso seja feito com precisão — e não apenas com entusiasmo." data-en="We work with restaurant founders, hotel operators, and investors who are building hospitality spaces and want them done with precision — not just enthusiasm.">Trabalhamos com fundadores de restaurantes, operadores hoteleiros e investidores que estão a construir espaços de hospitalidade e pretendem que isso seja feito com precisão — e não apenas com entusiasmo.</p>
+      </div>
+    </div>
+  </section>
+  <section class="services" id="servicos">
+    <div class="sec-head">
+      <p class="tag mono" data-pt="[ O Que Fazemos ]" data-en="[ What We Do ]">[ O Que Fazemos ]</p>
+      <h2 class="sec-title" data-pt="Da Primeira Ideia à &lt;em&gt;Noite de Abertura&lt;/em&gt;" data-en="From First Idea to &lt;em&gt;Opening Night&lt;/em&gt;">Da Primeira Ideia à <em>Noite de Abertura</em></h2>
+      <p class="sec-body" data-pt="A Sakim Lab trabalha em quatro áreas interligadas de desenvolvimento de hospitalidade." data-en="Sakim Lab works across four interconnected areas of hospitality development.">A Sakim Lab trabalha em quatro áreas interligadas de desenvolvimento de hospitalidade.</p>
+    </div>
+    <ol class="areas">
+      <li class="area" data-move="spin">
+        <button type="button" class="area-head" aria-expanded="false">
+          <span class="area-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span>
+          <span class="area-title">
+            <span class="area-letter mono" data-pt="Serviço A · 4 incluídos" data-en="Service A · 4 included">Serviço A · 4 incluídos</span>
+            <span class="area-name" data-pt="Conceito &amp; Posicionamento" data-en="Concept &amp; Positioning">Conceito & Posicionamento</span>
+          </span>
+          <span class="area-sum" data-pt="Definir o que é um espaço, para quem existe e por que razão terá relevância." data-en="Defining what a space is, who it&#x27;s for, and why it will matter.">Definir o que é um espaço, para quem existe e por que razão terá relevância.</span>
+          <span class="area-more mono"><span data-pt="Ver" data-en="See">Ver</span><i aria-hidden="true">+</i></span>
+        </button>
+        <div class="area-body"><ul><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2v.1h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><h4 data-pt="Desenvolvimento de Conceito" data-en="Concept Development">Desenvolvimento de Conceito</h4><p data-pt="Definir a ideia fundamental — o seu ponto de vista, público e razão de existir." data-en="Defining the foundational idea — its point of view, audience, and reason for existing.">Definir a ideia fundamental — o seu ponto de vista, público e razão de existir.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16zM14 6l3 3"/></svg><h4 data-pt="Direção de Marca" data-en="Brand Direction">Direção de Marca</h4><p data-pt="Direção estratégica e criativa para uma marca de hospitalidade — linguagem visual e tom de voz." data-en="Strategic and creative direction for a hospitality brand — visual language and tone of voice.">Direção estratégica e criativa para uma marca de hospitalidade — linguagem visual e tom de voz.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.5 2.5M15.2 15.2l2.5 2.5M6.3 17.7l2.5-2.5M15.2 8.8l2.5-2.5"/></svg><h4 data-pt="Identidade de Hospitalidade" data-en="Hospitality Identity">Identidade de Hospitalidade</h4><p data-pt="Traduzir um conceito numa identidade sensorial e espacial coerente." data-en="Translating a concept into a coherent sensory and spatial identity.">Traduzir um conceito numa identidade sensorial e espacial coerente.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg><h4 data-pt="Nome &amp; Enquadramento" data-en="Naming &amp; Concept Framing">Nome & Enquadramento</h4><p data-pt="Encontrar o nome certo e a linguagem para enquadrar o que um espaço representa." data-en="Finding the right name and language to frame what a space is about.">Encontrar o nome certo e a linguagem para enquadrar o que um espaço representa.</p></li></ul></div>
+      </li>
+      <li class="area" data-move="tilt">
+        <button type="button" class="area-head" aria-expanded="false">
+          <span class="area-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16l-8 9zM12 13v7M8 20.5h8M15 4l3-2.5"/></svg></span>
+          <span class="area-title">
+            <span class="area-letter mono" data-pt="Serviço B · 4 incluídos" data-en="Service B · 4 included">Serviço B · 4 incluídos</span>
+            <span class="area-name" data-pt="Comida, Bebida &amp; Experiência" data-en="Food, Beverage &amp; Experience">Comida, Bebida & Experiência</span>
+          </span>
+          <span class="area-sum" data-pt="Desenvolvimento de menu, estratégia de vinho e bar, e o design completo da experiência do cliente." data-en="Menu development, wine and bar strategy, and the full design of the guest journey.">Desenvolvimento de menu, estratégia de vinho e bar, e o design completo da experiência do cliente.</span>
+          <span class="area-more mono"><span data-pt="Ver" data-en="See">Ver</span><i aria-hidden="true">+</i></span>
+        </button>
+        <div class="area-body"><ul><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v6a2 2 0 0 0 4 0V3M7 3v18M17 21V3c-2 1.5-3 4-3 7v3h3"/></svg><h4 data-pt="Desenvolvimento de Menu" data-en="Menu Development">Desenvolvimento de Menu</h4><p data-pt="Desenvolvimento de menu enraizado na coerência do conceito, viabilidade operacional e experiência do cliente." data-en="Menu development rooted in concept coherence, operational viability, and guest experience.">Desenvolvimento de menu enraizado na coerência do conceito, viabilidade operacional e experiência do cliente.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8l-.5 5a3.5 3.5 0 0 1-7 0zM12 11.5V20M8.5 20.5h7"/></svg><h4 data-pt="Estratégia de Bebidas &amp; Vinho" data-en="Beverage &amp; Wine Strategy">Estratégia de Bebidas & Vinho</h4><p data-pt="Construção de carta de vinhos, programa de bebidas e seleção de fornecedores." data-en="Wine list construction, beverage programme, and supplier sourcing.">Construção de carta de vinhos, programa de bebidas e seleção de fornecedores.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16l-8 9zM12 13v7M8 20.5h8M15 4l3-2.5"/></svg><h4 data-pt="Desenvolvimento de Bar" data-en="Bar Concept Development">Desenvolvimento de Bar</h4><p data-pt="Desenvolvimento criativo e operacional completo de conceitos de bar — direção de cocktails, arquitetura de lista, estilo de serviço." data-en="Full creative and operational development of bar concepts — cocktail direction, list architecture, service style.">Desenvolvimento criativo e operacional completo de conceitos de bar — direção de cocktails, arquitetura de lista, estilo de serviço.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h7a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h7"/></svg><h4 data-pt="Design da Jornada do Cliente" data-en="Guest Journey Design">Design da Jornada do Cliente</h4><p data-pt="Desenhar a experiência completa do cliente desde a reserva até à saída." data-en="Designing the full guest experience from reservation to departure.">Desenhar a experiência completa do cliente desde a reserva até à saída.</p></li></ul></div>
+      </li>
+      <li class="area" data-move="swing">
+        <button type="button" class="area-head" aria-expanded="false">
+          <span class="area-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v5M5 14a7 7 0 0 1 14 0zM10 17.5a2 2 0 0 0 4 0"/></svg></span>
+          <span class="area-title">
+            <span class="area-letter mono" data-pt="Serviço C · 4 incluídos" data-en="Service C · 4 included">Serviço C · 4 incluídos</span>
+            <span class="area-name" data-pt="Espaço, Configuração &amp; Operações" data-en="Space, Setup &amp; Operations">Espaço, Configuração & Operações</span>
+          </span>
+          <span class="area-sum" data-pt="Direção de atmosfera interior, seleção de fornecedores e design do fluxo de serviço." data-en="Interior atmosphere direction, supplier sourcing, and service flow design.">Direção de atmosfera interior, seleção de fornecedores e design do fluxo de serviço.</span>
+          <span class="area-more mono"><span data-pt="Ver" data-en="See">Ver</span><i aria-hidden="true">+</i></span>
+        </button>
+        <div class="area-body"><ul><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v5M5 14a7 7 0 0 1 14 0zM10 17.5a2 2 0 0 0 4 0"/></svg><h4 data-pt="Direção de Interior &amp; Atmosfera" data-en="Interior &amp; Atmosphere Direction">Direção de Interior & Atmosfera</h4><p data-pt="Direção criativa para o espaço físico — garantindo que o conceito está presente em cada decisão." data-en="Creative direction for the physical space — ensuring the concept is present in every decision.">Direção criativa para o espaço físico — garantindo que o conceito está presente em cada decisão.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10"/></svg><h4 data-pt="Seleção de Fornecedores" data-en="Supplier Sourcing">Seleção de Fornecedores</h4><p data-pt="Identificar os fornecedores certos cuja qualidade e valores estejam alinhados com o projeto." data-en="Identifying the right suppliers whose quality and values align with the project.">Identificar os fornecedores certos cuja qualidade e valores estejam alinhados com o projeto.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg><h4 data-pt="Configuração Operacional" data-en="Operational Setup">Configuração Operacional</h4><p data-pt="Construir a infraestrutura operacional — sistemas, processos e lógica de trabalho." data-en="Building the operational infrastructure — systems, processes, and working logic.">Construir a infraestrutura operacional — sistemas, processos e lógica de trabalho.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6h10M10 12h10M10 18h10M4 6l1.2 1.2L7.5 5M4 12l1.2 1.2 2.3-2.2M4 18l1.2 1.2 2.3-2.2"/></svg><h4 data-pt="Fluxo de Serviço &amp; Abertura" data-en="Service Flow &amp; Opening Readiness">Fluxo de Serviço & Abertura</h4><p data-pt="Desenhar e testar o fluxo de serviço antes da abertura." data-en="Designing and testing the service flow before opening.">Desenhar e testar o fluxo de serviço antes da abertura.</p></li></ul></div>
+      </li>
+      <li class="area" data-move="hop">
+        <button type="button" class="area-head" aria-expanded="false">
+          <span class="area-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.3A5 5 0 0 1 21 19"/></svg></span>
+          <span class="area-title">
+            <span class="area-letter mono" data-pt="Serviço D · 4 incluídos" data-en="Service D · 4 included">Serviço D · 4 incluídos</span>
+            <span class="area-name" data-pt="Equipa, Lançamento &amp; Consultoria" data-en="Team, Launch &amp; Advisory">Equipa, Lançamento & Consultoria</span>
+          </span>
+          <span class="area-sum" data-pt="Staffing, formação, estratégia de lançamento e apoio consultivo contínuo." data-en="Staffing, training, launch strategy, and ongoing advisory support.">Staffing, formação, estratégia de lançamento e apoio consultivo contínuo.</span>
+          <span class="area-more mono"><span data-pt="Ver" data-en="See">Ver</span><i aria-hidden="true">+</i></span>
+        </button>
+        <div class="area-body"><ul><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.3A5 5 0 0 1 21 19"/></svg><h4 data-pt="Staffing &amp; Formação" data-en="Staffing &amp; Training">Staffing & Formação</h4><p data-pt="Apoio ao recrutamento e formação para funções de sala e gestão." data-en="Recruitment support and training for front-of-house and management roles.">Apoio ao recrutamento e formação para funções de sala e gestão.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h12l-2.5 4 2.5 4H5"/></svg><h4 data-pt="Estratégia de Lançamento" data-en="Launch Strategy">Estratégia de Lançamento</h4><p data-pt="Planear a fase de abertura — comunicação, relações com imprensa, programação de soft launch." data-en="Planning the opening phase — communication, press outreach, soft launch programming.">Planear a fase de abertura — comunicação, relações com imprensa, programação de soft launch.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17M3 21h18M14.5 12h.01"/></svg><h4 data-pt="Apoio à Abertura" data-en="Opening Support">Apoio à Abertura</h4><p data-pt="Presença no local durante o período de abertura — observando o serviço e gerindo ajustes." data-en="On-site presence during the opening period — observing service and managing adjustments.">Presença no local durante o período de abertura — observando o serviço e gerindo ajustes.</p></li><li><svg class="item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h11v8H8.5L4 16.5zM15 9h5v8.5L16.5 15H11v-2"/></svg><h4 data-pt="Consultoria Contínua" data-en="Ongoing Advisory">Consultoria Contínua</h4><p data-pt="Uma relação consultiva de retenção para fundadores que pretendem um parceiro de longo prazo." data-en="A retained advisory relationship for founders who want a long-term thinking partner.">Uma relação consultiva de retenção para fundadores que pretendem um parceiro de longo prazo.</p></li></ul></div>
+      </li>
+    </ol>
+    <div class="inline-cta">
+      <p data-pt="A maioria dos projetos começa com uma breve consulta." data-en="Most projects begin with a brief consultation.">A maioria dos projetos começa com uma breve consulta.</p>
+      <a class="btn magnetic" href="contacto.html" data-pt="Agendar uma Consulta" data-en="Schedule a Consultation">Agendar uma Consulta</a>
+    </div>
+  </section>
+  <section class="projects" id="projectos">
+    <div class="pg-pin">
+      <div class="pg-head">
+        <p class="tag mono" data-pt="[ Trabalho Selecionado ]" data-en="[ Selected Work ]">[ Trabalho Selecionado ]</p>
+        <h2 class="sec-title" data-pt="Espaços que &lt;em&gt;Ajudámos a Criar&lt;/em&gt;" data-en="Spaces We&#x27;ve &lt;em&gt;Helped Shape&lt;/em&gt;">Espaços que <em>Ajudámos a Criar</em></h2>
+        <p class="pg-count mono"><b>01</b> / 14</p>
+      </div>
+      <div class="pg-viewport">
+        <div class="pg-track">
+      <a class="pg-card" href="lugares/a-tabacaria.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/a-tabacaria/balcao.jpg" alt="" loading="eager"></figure>
+        <span class="pg-n mono">01</span>
+        <span class="pg-name">A Tabacaria</span>
+        <span class="pg-meta mono" data-pt="Bar · Lisboa · 2015" data-en="Bar · Lisbon · 2015">Bar · Lisboa · 2015</span>
+      </a>
+      <a class="pg-card" href="lugares/o-terraco.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/o-terraco/por-do-sol.jpg" alt="" loading="eager"></figure>
+        <span class="pg-n mono">02</span>
+        <span class="pg-name">O Terraço Bar</span>
+        <span class="pg-meta mono" data-pt="Rooftop Bar · Lisboa" data-en="Rooftop Bar · Lisbon">Rooftop Bar · Lisboa</span>
+      </a>
+      <a class="pg-card" href="lugares/bica-me.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/bica-me/velas.jpg" alt="" loading="eager"></figure>
+        <span class="pg-n mono">03</span>
+        <span class="pg-name">Bica-me</span>
+        <span class="pg-meta mono" data-pt="Mercearia Bar · Lisboa" data-en="Mercearia Bar · Lisbon">Mercearia Bar · Lisboa</span>
+      </a>
+      <a class="pg-card" href="lugares/bicaense.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/bicaense/jardim-de-luz.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">04</span>
+        <span class="pg-name">Bicaense</span>
+        <span class="pg-meta mono" data-pt="Bar Club · Lisboa · 2002" data-en="Bar Club · Lisbon · 2002">Bar Club · Lisboa · 2002</span>
+      </a>
+      <a class="pg-card" href="lugares/social-b.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/social-b/bar-violeta.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">05</span>
+        <span class="pg-name">Social B</span>
+        <span class="pg-meta mono" data-pt="Bar Club · Lisboa · 2018" data-en="Bar Club · Lisbon · 2018">Bar Club · Lisboa · 2018</span>
+      </a>
+      <a class="pg-card" href="lugares/o-larguinho.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/o-larguinho/largo-ao-anoitecer.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">06</span>
+        <span class="pg-name">O Larguinho</span>
+        <span class="pg-meta mono" data-pt="Bar de Tapas · Lisboa" data-en="Tapas Bar · Lisbon">Bar de Tapas · Lisboa</span>
+      </a>
+      <a class="pg-card" href="lugares/afro-taska.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/afro-taska/mesas.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">07</span>
+        <span class="pg-name">Afro Taska</span>
+        <span class="pg-meta mono" data-pt="Tasca Africana · Lisboa" data-en="African Tasca · Lisbon">Tasca Africana · Lisboa</span>
+      </a>
+      <a class="pg-card" href="lugares/house-4.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/house-4/corredor-rosa.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">08</span>
+        <span class="pg-name">House 4</span>
+        <span class="pg-meta mono" data-pt="Alojamento Local · Lisboa" data-en="Alojamento Local · Lisbon">Alojamento Local · Lisboa</span>
+      </a>
+      <a class="pg-card" href="lugares/monte-da-lua.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/monte-da-lua/cabana-a-noite.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">09</span>
+        <span class="pg-name">Monte da Lua</span>
+        <span class="pg-meta mono" data-pt="Retiro Rural · Moçambique" data-en="Rural Retreat · Mozambique">Retiro Rural · Moçambique</span>
+      </a>
+      <a class="pg-card" href="lugares/clube-ferroviario.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/clube-ferroviario/navio.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">10</span>
+        <span class="pg-name">Clube Ferroviário</span>
+        <span class="pg-meta mono" data-pt="Rooftop Bar · Lisboa · 2010" data-en="Rooftop Bar · Lisbon · 2010">Rooftop Bar · Lisboa · 2010</span>
+      </a>
+      <a class="pg-card" href="lugares/ricucu.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/ricucu/porta-roxa.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">11</span>
+        <span class="pg-name">Ricucu</span>
+        <span class="pg-meta mono" data-pt="Bar de Praia · Praia Verde, Algarve" data-en="Beach Bar · Praia Verde, Algarve">Bar de Praia · Praia Verde, Algarve</span>
+      </a>
+      <a class="pg-card" href="lugares/velha-senhora.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/velha-senhora/porta.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">12</span>
+        <span class="pg-name">O Bar da Velha Senhora</span>
+        <span class="pg-meta mono" data-pt="Restaurante · Bar · Clube · Lisboa" data-en="Restaurant · Bar · Club · Lisbon">Restaurante · Bar · Clube · Lisboa</span>
+      </a>
+      <a class="pg-card" href="lugares/so-what.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/so-what/abobada-acesa.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">13</span>
+        <span class="pg-name">So What</span>
+        <span class="pg-meta mono" data-pt="Bar · Restaurante · Jazz Clube · 2024" data-en="Bar · Restaurant · Jazz Club · 2024">Bar · Restaurante · Jazz Clube · 2024</span>
+      </a>
+      <a class="pg-card" href="lugares/sakim.html" data-cursor="Ver" data-cursor-en="View">
+        <figure><img class="photo" src="assets/img/lugares/sakim/sala-comprida.jpg" alt="" loading="lazy"></figure>
+        <span class="pg-n mono">14</span>
+        <span class="pg-name">Sakim</span>
+        <span class="pg-meta mono" data-pt="Gastro Bar" data-en="Gastro Bar">Gastro Bar</span>
+      </a>
+        </div>
+      </div>
+      <div class="pg-bar" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+  <section class="process night" id="processo">
+    <div class="night-pin">
+      <div class="night-head">
+        <p class="tag mono" data-pt="[ Como Trabalhamos ]" data-en="[ How We Work ]">[ Como Trabalhamos ]</p>
+        <h2 class="mega mega-s" aria-label="O Processo" data-label-pt="O Processo" data-label-en="The Process"><span class="row"><span data-pt="O Processo" data-en="The Process">O Processo</span></span></h2>
+        <p class="sec-body" data-pt="Cada projecto segue a mesma lógica subjacente — uma progressão estruturada desde a descoberta até ao lançamento." data-en="Every project follows the same underlying logic — a structured progression from discovery through to launch.">Cada projecto segue a mesma lógica subjacente — uma progressão estruturada desde a descoberta até ao lançamento.</p>
+      </div>
+      <div class="night-viewport">
+        <ol class="night-track">
+          <li class="night-line" aria-hidden="true"><i></i></li>
+        <li class="night-step">
+          <span class="night-time">18:00</span>
+          <span class="night-dot" aria-hidden="true"></span>
+          <span class="mono night-n">[ 01 ]</span>
+          <h3 data-pt="Descoberta" data-en="Discovery">Descoberta</h3>
+          <p data-pt="Compreender o contexto, a ambição e as condicionantes de cada projecto antes de qualquer outra coisa." data-en="Understanding the context, ambition, and constraints of each project before anything else.">Compreender o contexto, a ambição e as condicionantes de cada projecto antes de qualquer outra coisa.</p>
+        </li>
+        <li class="night-step">
+          <span class="night-time">19:30</span>
+          <span class="night-dot" aria-hidden="true"></span>
+          <span class="mono night-n">[ 02 ]</span>
+          <h3 data-pt="Definição de Conceito" data-en="Concept Definition">Definição de Conceito</h3>
+          <p data-pt="Transformar a ideia num conceito claro e coerente com identidade definida e direção estratégica." data-en="Shaping the idea into a clear, coherent concept with a defined identity and strategic direction.">Transformar a ideia num conceito claro e coerente com identidade definida e direção estratégica.</p>
+        </li>
+        <li class="night-step">
+          <span class="night-time">21:00</span>
+          <span class="night-dot" aria-hidden="true"></span>
+          <span class="mono night-n">[ 03 ]</span>
+          <h3 data-pt="Desenvolvimento" data-en="Development">Desenvolvimento</h3>
+          <p data-pt="Construir as camadas operacionais e criativas — menus, fornecedores, atmosfera, equipa." data-en="Building out the operational and creative layers — menus, suppliers, atmosphere, team.">Construir as camadas operacionais e criativas — menus, fornecedores, atmosfera, equipa.</p>
+        </li>
+        <li class="night-step">
+          <span class="night-time">22:30</span>
+          <span class="night-dot" aria-hidden="true"></span>
+          <span class="mono night-n">[ 04 ]</span>
+          <h3 data-pt="Refinamento" data-en="Refinement">Refinamento</h3>
+          <p data-pt="Testar menus, formar a equipa, realizar soft launches e fazer ajustes." data-en="Testing menus, training the team, running soft launches, and making adjustments.">Testar menus, formar a equipa, realizar soft launches e fazer ajustes.</p>
+        </li>
+        <li class="night-step">
+          <span class="night-time">00:00</span>
+          <span class="night-dot" aria-hidden="true"></span>
+          <span class="mono night-n">[ 05 ]</span>
+          <h3 data-pt="Abertura &amp; Lançamento" data-en="Opening &amp; Launch">Abertura & Lançamento</h3>
+          <p data-pt="Estamos presentes na abertura — observando o serviço, apoiando a equipa e gerindo decisões em tempo real." data-en="We are present for the opening — observing service, supporting the team, managing real-time decisions.">Estamos presentes na abertura — observando o serviço, apoiando a equipa e gerindo decisões em tempo real.</p>
+        </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  <section class="editorial about" id="sobre">
+    <div class="ed-page">
+      <p class="tag mono" data-pt="[ Sobre o Estúdio ]" data-en="[ About the Studio ]">[ Sobre o Estúdio ]</p>
+      <h2 class="ed-title" data-pt="Direção criativa&lt;br&gt;e pensamento&lt;br&gt;&lt;em&gt;operacional, juntos.&lt;/em&gt;" data-en="Creative direction&lt;br&gt;and operational&lt;br&gt;&lt;em&gt;thinking, together.&lt;/em&gt;">Direção criativa<br>e pensamento<br><em>operacional, juntos.</em></h2>
+      <div class="ed-meta mono"><span><span data-pt="A Sakim Lab é um estúdio de conceito de hospitalidade." data-en="Sakim Lab is a hospitality concept studio.">A Sakim Lab é um estúdio de conceito de hospitalidade.</span></span><span><span data-pt="Lisboa, Portugal" data-en="Lisbon, Portugal">Lisboa, Portugal</span></span></div>
+      <div class="ed-cols">
+        <p data-pt="A nossa abordagem assenta na convicção de que &lt;strong&gt;direção criativa e pensamento operacional&lt;/strong&gt; nunca devem ser separados." data-en="Our approach is built on the belief that &lt;strong&gt;creative direction and operational thinking&lt;/strong&gt; should never be separated.">A nossa abordagem assenta na convicção de que <strong>direção criativa e pensamento operacional</strong> nunca devem ser separados.</p>
+        <p data-pt="Somos seletivos quanto aos clientes com quem trabalhamos. Trabalhamos melhor com clientes que têm uma perspetiva própria e que confiam em nós para a questionar." data-en="We are selective about who we work with. We work best with clients who have a point of view, and who trust us to challenge it.">Somos seletivos quanto aos clientes com quem trabalhamos. Trabalhamos melhor com clientes que têm uma perspetiva própria e que confiam em nós para a questionar.</p>
+      </div>
+      <div class="mikas">
+        <p class="tag mono" data-pt="[ Quem Está à Mesa ]" data-en="[ Who&#x27;s at the Table ]">[ Quem Está à Mesa ]</p>
+        <p class="mikas-text" data-pt="Por trás da Sakim Lab está &lt;strong&gt;Mikas&lt;/strong&gt;, moçambicano, há mais de trinta anos a fazer a noite de Lisboa. Quando a Bica era ainda um bairro fechado sobre si mesmo, abriu lá o W.I.P. — bar, loja de roupa e cabeleireiro ao mesmo tempo. Seguiu-se o Bicaense, e a noite da Bica nunca mais foi a mesma." data-en="Behind Sakim Lab is &lt;strong&gt;Mikas&lt;/strong&gt;, Mozambican, shaping Lisbon&#x27;s nights for more than thirty years. When Bica was still a neighbourhood closed in on itself, he opened W.I.P. there — a bar, a clothes shop and a hairdresser all at once. Then came Bicaense, and nights in Bica were never the same again.">Por trás da Sakim Lab está <strong>Mikas</strong>, moçambicano, há mais de trinta anos a fazer a noite de Lisboa. Quando a Bica era ainda um bairro fechado sobre si mesmo, abriu lá o W.I.P. — bar, loja de roupa e cabeleireiro ao mesmo tempo. Seguiu-se o Bicaense, e a noite da Bica nunca mais foi a mesma.</p>
+        <a class="mikas-source mono" href="https://www.publico.pt/2010/06/27/culturaipsilon/noticia/mikas-uma-historia-do-cerco-de-lisboa-259846" target="_blank" rel="noopener"><span data-pt="Segundo o Público, 2010" data-en="According to Público, 2010">Segundo o Público, 2010</span> ↗</a>
+      </div>
+      <ul class="values">
+      <li class="value"><span class="circles" aria-hidden="true"><img class="photo" src="assets/img/lugares/bicaense/jardim-de-luz.jpg" alt="" loading="lazy"><i></i></span>
+        <div><h4 data-pt="Conceito em Primeiro" data-en="Concept First">Conceito em Primeiro</h4><p data-pt="Cada decisão nasce de um conceito claro e bem definido." data-en="Every decision flows from a clear, well-defined concept.">Cada decisão nasce de um conceito claro e bem definido.</p></div></li>
+      <li class="value"><span class="circles" aria-hidden="true"><img class="photo" src="assets/img/lugares/so-what/antes.jpg" alt="" loading="lazy"><i></i></span>
+        <div><h4 data-pt="Paciência Estratégica" data-en="Strategic Patience">Paciência Estratégica</h4><p data-pt="Os melhores espaços de hospitalidade são construídos de forma lenta e deliberada." data-en="The best hospitality spaces are built slowly and deliberately.">Os melhores espaços de hospitalidade são construídos de forma lenta e deliberada.</p></div></li>
+      <li class="value"><span class="circles" aria-hidden="true"><img class="photo" src="assets/img/lugares/a-tabacaria/balcao.jpg" alt="" loading="lazy"><i></i></span>
+        <div><h4 data-pt="Gosto Acima de Tendência" data-en="Taste Over Trend">Gosto Acima de Tendência</h4><p data-pt="Interessam-nos os espaços e conceitos que resistem ao tempo." data-en="We are interested in what holds up — spaces and concepts that age well.">Interessam-nos os espaços e conceitos que resistem ao tempo.</p></div></li>
+      </ul>
+    </div>
+    <div class="press" id="imprensa">
+      <div class="press-head">
+        <p class="tag mono" data-pt="[ Na Imprensa ]" data-en="[ In the Press ]">[ Na Imprensa ]</p>
+        <h3 class="sec-title" data-pt="O que se &lt;em&gt;escreveu&lt;/em&gt;" data-en="What&#x27;s been &lt;em&gt;written&lt;/em&gt;">O que se <em>escreveu</em></h3>
+      </div>
+      <div class="timeline">
+        <ol class="stops">
+        <li class="stop on new-year">
+          <span class="stop-year mono">2010</span>
+          <button type="button" data-i="0" aria-label="Público · Ípsilon: Mikas: uma história do cerco de Lisboa"><i></i></button>
+        </li>
+        <li class="stop new-year">
+          <span class="stop-year mono">2015</span>
+          <button type="button" data-i="1" aria-label="Observador: A Tabacaria: uma lotaria de rum, gin e petiscos"><i></i></button>
+        </li>
+        <li class="stop">
+          <span class="stop-year mono"></span>
+          <button type="button" data-i="2" aria-label="NiT: A nova Tabacaria onde se servem gins e cerveja"><i></i></button>
+        </li>
+        <li class="stop">
+          <span class="stop-year mono"></span>
+          <button type="button" data-i="3" aria-label="Observador: 10 terraços para celebrar o sol"><i></i></button>
+        </li>
+        <li class="stop new-year">
+          <span class="stop-year mono">2018</span>
+          <button type="button" data-i="4" aria-label="Visão Se7e: Social B, em Lisboa: um bar sem conceitos"><i></i></button>
+        </li>
+        <li class="stop">
+          <span class="stop-year mono"></span>
+          <button type="button" data-i="5" aria-label="Time Out Lisboa: Social B: este novo bar no Cais do Sodré pode ser a sua sala de estar"><i></i></button>
+        </li>
+        <li class="stop new-year">
+          <span class="stop-year mono">2019</span>
+          <button type="button" data-i="6" aria-label="Time Out Lisboa: A noite que dá fama à Bica “está progressivamente a desaparecer”"><i></i></button>
+        </li>
+        <li class="stop">
+          <span class="stop-year mono"></span>
+          <button type="button" data-i="7" aria-label="Time Out Lisboa: Bicaense fecha e deixa Lisboa sem um dos seus bares de referência"><i></i></button>
+        </li>
+        <li class="stop new-year">
+          <span class="stop-year mono">2024</span>
+          <button type="button" data-i="8" aria-label="Time Out Lisboa: Mikas tem um novo bar e é um club de jazz: So What"><i></i></button>
+        </li>
+        <li class="stop new-year">
+          <span class="stop-year mono"><span data-pt="Sem data" data-en="Undated">Sem data</span></span>
+          <button type="button" data-i="9" aria-label="Cuisine Noir: Mikas Builds a Renaissance Legacy at Social B"><i></i></button>
+        </li>
+        <li class="stop">
+          <span class="stop-year mono"></span>
+          <button type="button" data-i="10" aria-label="The Infatuation: Social B — Lisbon review"><i></i></button>
+        </li>
+        <li class="stop">
+          <span class="stop-year mono"></span>
+          <button type="button" data-i="11" aria-label="Time Out Lisbon: Clube Ferroviário"><i></i></button>
+        </li>
+        <li class="stop">
+          <span class="stop-year mono"></span>
+          <button type="button" data-i="12" aria-label="Público · Fugas: Bar da Velha Senhora"><i></i></button>
+        </li>
+        </ol>
+      </div>
+      <div class="teasers">
+        <div class="track">
+        <div class="teaser on" data-i="0">
+          <img src="assets/img/marca/sakim-logo.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Público · Ípsilon</b><span>2010</span><span>Mikas</span></span>
+            <span class="teaser-title">“Mikas: uma história do cerco de Lisboa”</span>
+            <a class="teaser-read mono" href="https://www.publico.pt/2010/06/27/culturaipsilon/noticia/mikas-uma-historia-do-cerco-de-lisboa-259846" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="1">
+          <img src="assets/img/mini/a-tabacaria/balcao.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Observador</b><span>2015</span><span>A Tabacaria</span></span>
+            <span class="teaser-title">“A Tabacaria: uma lotaria de rum, gin e petiscos”</span>
+            <a class="teaser-read mono" href="https://observador.pt/2015/10/23/tabacaria-lotaria-rum-gin-petiscos/" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="2">
+          <img src="assets/img/mini/a-tabacaria/balcao.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>NiT</b><span>2015</span><span>A Tabacaria</span></span>
+            <span class="teaser-title">“A nova Tabacaria onde se servem gins e cerveja”</span>
+            <a class="teaser-read mono" href="https://www.nit.pt/comida/09-08-2015-a-nova-tabacaria-onde-ser-servem-gins-e-cerveja" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="3">
+          <img src="assets/img/mini/clube-ferroviario/navio.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Observador</b><span>2015</span><span>Clube Ferroviário</span></span>
+            <span class="teaser-title">“10 terraços para celebrar o sol”</span>
+            <a class="teaser-read mono" href="https://observador.pt/2015/05/12/10-terracos-para-celebrar-o-sol/" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="4">
+          <img src="assets/img/mini/social-b/bar-violeta.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Visão Se7e</b><span>2018</span><span>Social B</span></span>
+            <span class="teaser-title">“Social B, em Lisboa: um bar sem conceitos”</span>
+            <a class="teaser-read mono" href="https://visao.pt/visaose7e/sair/2018-08-09-social-b-em-lisboa-um-bar-sem-conceitos/" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="5">
+          <img src="assets/img/mini/social-b/bar-violeta.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Time Out Lisboa</b><span>2018</span><span>Social B</span></span>
+            <span class="teaser-title">“Social B: este novo bar no Cais do Sodré pode ser a sua sala de estar”</span>
+            <a class="teaser-read mono" href="https://www.timeout.pt/lisboa/pt/noticias/social-b-este-novo-bar-no-cais-do-sodre-pode-ser-a-sua-sala-de-estar-090618" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="6">
+          <img src="assets/img/mini/bicaense/jardim-de-luz.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Time Out Lisboa</b><span>2019</span><span>Bicaense</span></span>
+            <span class="teaser-title">“A noite que dá fama à Bica “está progressivamente a desaparecer””</span>
+            <a class="teaser-read mono" href="https://www.timeout.pt/lisboa/pt/noticias/a-noite-que-da-fama-a-bica-esta-progressivamente-a-desaparecer-011019" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="7">
+          <img src="assets/img/mini/bicaense/jardim-de-luz.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Time Out Lisboa</b><span>2019</span><span>Bicaense</span></span>
+            <span class="teaser-title">“Bicaense fecha e deixa Lisboa sem um dos seus bares de referência”</span>
+            <a class="teaser-read mono" href="https://www.timeout.pt/lisboa/pt/noticias/bicaense-fecha-e-deixa-lisboa-sem-um-dos-seus-bares-de-referencia-010919" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="8">
+          <img src="assets/img/mini/so-what/abobada-acesa.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Time Out Lisboa</b><span>2024</span><span>So What</span></span>
+            <span class="teaser-title">“Mikas tem um novo bar e é um club de jazz: So What”</span>
+            <a class="teaser-read mono" href="https://www.timeout.pt/lisboa/pt/noticias/mikas-tem-um-novo-bar-e-e-um-club-de-jazz-so-what-041224" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="9">
+          <img src="assets/img/marca/sakim-logo.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Cuisine Noir</b><span></span><span>Mikas</span></span>
+            <span class="teaser-title">“Mikas Builds a Renaissance Legacy at Social B”</span>
+            <a class="teaser-read mono" href="https://www.cuisinenoir.com/mikas-social-b-lisbon-portugal/" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="10">
+          <img src="assets/img/mini/social-b/bar-violeta.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>The Infatuation</b><span></span><span>Social B</span></span>
+            <span class="teaser-title">“Social B — Lisbon review”</span>
+            <a class="teaser-read mono" href="https://www.theinfatuation.com/lisbon/reviews/social-b" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="11">
+          <img src="assets/img/mini/clube-ferroviario/navio.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Time Out Lisbon</b><span></span><span>Clube Ferroviário</span></span>
+            <span class="teaser-title">“Clube Ferroviário”</span>
+            <a class="teaser-read mono" href="https://www.timeout.com/lisbon/nightlife/clube-ferroviario" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        <div class="teaser" data-i="12">
+          <img src="assets/img/mini/velha-senhora/porta.jpg" alt="" loading="lazy">
+          <span class="teaser-text">
+            <span class="teaser-meta mono"><b>Público · Fugas</b><span></span><span>O Bar da Velha Senhora</span></span>
+            <span class="teaser-title">“Bar da Velha Senhora”</span>
+            <a class="teaser-read mono" href="https://fugas.publico.pt/restaurantesebares/296729_bar-da-velha-senhora" target="_blank" rel="noopener"><span data-pt="Ler artigo" data-en="Read the article">Ler artigo</span> ↗</a>
+          </span>
+        </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section class="contact" id="contacto">
+    <p class="tag mono" data-pt="[ Contacto ]" data-en="[ Contact ]">[ Contacto ]</p>
+    <h2 class="mega contact-mega" aria-label="Vamos Falar Sobre o Seu Projecto" data-label-pt="Vamos Falar Sobre o Seu Projecto" data-label-en="Let&#x27;s Talk About Your Project"><span class="row"><span data-pt="Vamos Falar Sobre" data-en="Let&#x27;s Talk About">Vamos Falar Sobre</span></span><span class="row"><span data-pt="o Seu Projecto" data-en="Your Project">o Seu Projecto</span> <span class="pic" aria-hidden="true"><img class="photo on" src="assets/img/lugares/sakim/mesa-longa.jpg" alt="" data-name="Sakim"><img class="photo" src="assets/img/lugares/so-what/mesa-posta.jpg" alt="" data-name="So What"><img class="photo" src="assets/img/lugares/a-tabacaria/espuma.jpg" alt="" data-name="A Tabacaria" loading="lazy"><img class="photo" src="assets/img/lugares/o-terraco/hora-azul.jpg" alt="" data-name="O Terraço Bar" loading="lazy"></span></span></h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-body" data-pt="Recebemos um número limitado de projetos por ano. O primeiro passo é sempre uma breve conversa." data-en="We take on a limited number of projects each year. The first step is always a short conversation.">Recebemos um número limitado de projetos por ano. O primeiro passo é sempre uma breve conversa.</p>
+        <a class="btn btn-play btn-big magnetic" href="contacto.html" data-pt="Iniciar Projecto" data-en="Start Your Project">Iniciar Projecto</a>
+      </div>
+      <div class="contact-links mono">
+        <a href="mailto:studio@sakinlab.com"><span>Email</span><span>studio@sakinlab.com</span></a>
+        <a href="https://wa.me/351913915323" target="_blank" rel="noopener"><span>WhatsApp</span><span>+351 913 915 323</span></a>
+        <a href="https://instagram.com/sakinlab" target="_blank" rel="noopener"><span>Instagram</span><span>@sakinlab</span></a>
+        <div><span data-pt="Baseados Em" data-en="Based In">Baseados Em</span><span data-pt="Lisboa, Portugal" data-en="Lisbon, Portugal">Lisboa, Portugal</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot mono">
+  <span>© 2026 Sakim Lab · <span data-pt="Todos os direitos reservados." data-en="All rights reserved.">Todos os direitos reservados.</span></span>
+  <span><a href="mailto:studio@sakinlab.com">Email</a> · <a href="https://wa.me/351913915323" target="_blank" rel="noopener">WhatsApp</a> · <a href="https://instagram.com/sakinlab" target="_blank" rel="noopener">Instagram</a></span>
+</footer>
+<!-- Text editor added to editor.html by build.py: every text on the page can be edited in place.
+     Changes stay in this browser (localStorage); "Enviar alterações" lists them to copy and send. -->
+<style>
+#sk-ed{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:calc(100vw - 32px);padding:8px 8px 8px 16px;border-radius:28px;background:#161616;color:#f3f0ea;font:500 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+#sk-ed button,#sk-panel button{appearance:none;border:0;border-radius:999px;padding:10px 16px;font:600 13px/1 system-ui,-apple-system,"Segoe UI",sans-serif;cursor:pointer;background:#f3f0ea;color:#161616}
+#sk-ed button[aria-pressed="true"],#sk-panel .pri{background:#e2582b;color:#fff}
+#sk-ed button:focus-visible,#sk-panel button:focus-visible{outline:2px solid #e2582b;outline-offset:2px}
+#sk-panel{position:fixed;inset:0;z-index:2147483001;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.5);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+#sk-panel[hidden]{display:none}
+#sk-panel .box{background:#f3f0ea;color:#161616;border-radius:16px;padding:20px;width:min(640px,100%);max-height:calc(100% - 32px);display:flex;flex-direction:column;gap:12px}
+#sk-panel h2{margin:0;font:700 18px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+#sk-panel p{margin:0}
+#sk-panel textarea{width:100%;min-height:200px;flex:1;box-sizing:border-box;padding:10px;border:1px solid #bbb;border-radius:8px;font:13px/1.4 ui-monospace,Menlo,monospace;background:#fff;color:#161616}
+#sk-panel .row{display:flex;gap:8px;flex-wrap:wrap}
+#sk-panel .ghost{background:transparent;border:1px solid #161616}
+html.sk-editing [data-sk-key]{outline:1px dashed rgba(226,88,43,.8);outline-offset:3px;cursor:text!important;border-radius:2px}
+html.sk-editing [data-sk-key]:focus{outline:2px solid #e2582b;background:rgba(226,88,43,.08)}
+html.sk-editing [data-sk-key].sk-changed{outline-color:#2b8a3e}
+html.sk-editing .cursor{display:none!important}
+</style>
+<div id="sk-ed" role="region" aria-label="Editor de textos">
+  <span id="sk-st">Nenhuma alteração</span>
+  <button type="button" id="sk-toggle" aria-pressed="false">Editar textos</button>
+  <button type="button" id="sk-send">Enviar alterações</button>
+</div>
+<div id="sk-panel" hidden>
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="sk-ph">
+    <h2 id="sk-ph">As suas alterações</h2>
+    <p>Copie este texto e cole-o na conversa com o Claude. Ele aplica as alterações ao site.</p>
+    <textarea id="sk-out" readonly></textarea>
+    <div class="row">
+      <button type="button" class="pri" id="sk-copy">Copiar</button>
+      <button type="button" class="ghost" id="sk-close">Fechar</button>
+      <button type="button" class="ghost" id="sk-clear">Apagar todas as alterações</button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.documentElement, KEY = 'sakim-edits';
+  var btn = document.getElementById('sk-toggle'), st = document.getElementById('sk-st');
+  var panel = document.getElementById('sk-panel'), out = document.getElementById('sk-out');
+  var edits = {}, editing = false, confirmClear = false;
+  try { edits = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { edits = {}; }
+  function store() { try { localStorage.setItem(KEY, JSON.stringify(edits)); } catch (e) {} status(); }
+  function status() { var n = Object.keys(edits).length; st.textContent = n ? n + (n === 1 ? ' texto alterado' : ' textos alterados') : 'Nenhuma alteração'; }
+  function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ('0000000' + (h >>> 0).toString(16)).slice(-8); }
+  function lang() { return root.lang === 'en' ? 'en' : 'pt'; }
+  function tag(el) {
+    if (el.dataset.skKey || el.closest('#sk-ed,#sk-panel')) return;
+    var pt = el.getAttribute('data-pt'), en = el.getAttribute('data-en');
+    if (pt == null || en == null) return;
+    el.dataset.skOrigPt = pt; el.dataset.skOrigEn = en;
+    el.dataset.skKey = hash(pt + '\u0001' + en);
+    apply(el);
+    if (editing) el.contentEditable = 'true';
+  }
+  function apply(el) {
+    var e = edits[el.dataset.skKey]; if (!e) return;
+    el.setAttribute('data-pt', e.pt); el.setAttribute('data-en', e.en);
+    el.classList.add('sk-changed');
+    if (document.activeElement !== el) el.innerHTML = e[lang()];
+  }
+  function scan(r) { r.querySelectorAll('[data-pt][data-en]').forEach(tag); if (r.matches && r.matches('[data-pt][data-en]')) tag(r); }
+  function clean(html) {
+    return html.replace(/<span class="ch[^"]*">([^<]*)<\/span>/g, '$1').replace(/&nbsp;/g, ' ')
+      .replace(/(<br\s*\/?>\s*)+$/, '').replace(/<(\/?)b>/g, '<$1strong>').replace(/<(\/?)i>/g, '<$1em>').trim();
+  }
+  function save(el) {
+    var l = lang(), v = clean(el.innerHTML);
+    if (v === el.getAttribute('data-' + l)) return;
+    el.setAttribute('data-' + l, v);
+    var k = el.dataset.skKey, pt = el.getAttribute('data-pt'), en = el.getAttribute('data-en');
+    if (pt === el.dataset.skOrigPt && en === el.dataset.skOrigEn) { delete edits[k]; el.classList.remove('sk-changed'); }
+    else { edits[k] = { orig_pt: el.dataset.skOrigPt, orig_en: el.dataset.skOrigEn, pt: pt, en: en }; el.classList.add('sk-changed'); }
+    store();
+  }
+  function setEditing(on) {
+    editing = on; root.classList.toggle('sk-editing', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'Terminar edição' : 'Editar textos';
+    document.querySelectorAll('[data-sk-key]').forEach(function (el) { if (on) el.contentEditable = 'true'; else el.removeAttribute('contenteditable'); });
+  }
+  function plain(h) { var d = document.createElement('div'); d.innerHTML = h.replace(/<em>|<\/em>/g, '*').replace(/<strong>|<\/strong>/g, '**').replace(/<br\s*\/?>/g, ' / '); return d.textContent; }
+  function report() {
+    var lines = ['ALTERAÇÕES DE TEXTO — SAKIM LAB', ''], n = 0;
+    Object.keys(edits).forEach(function (k) {
+      var e = edits[k];
+      [['pt', 'PT'], ['en', 'EN']].forEach(function (p) {
+        if (e[p[0]] === e['orig_' + p[0]]) return;
+        n++;
+        lines.push(n + '. [' + p[1] + '] ANTES: ' + plain(e['orig_' + p[0]]));
+        lines.push('   DEPOIS: ' + plain(e[p[0]]), '');
+      });
+    });
+    if (!n) lines.push('(nenhuma alteração)');
+    lines.push('#sakim-edits ' + JSON.stringify(Object.keys(edits).map(function (k) { return edits[k]; })));
+    return lines.join('\n');
+  }
+  btn.addEventListener('click', function () { setEditing(!editing); });
+  document.getElementById('sk-send').addEventListener('click', function () {
+    if (document.activeElement && document.activeElement.dataset && document.activeElement.dataset.skKey) document.activeElement.blur();
+    out.value = report(); panel.hidden = false; confirmClear = false;
+    document.getElementById('sk-clear').textContent = 'Apagar todas as alterações';
+  });
+  document.getElementById('sk-close').addEventListener('click', function () { panel.hidden = true; });
+  document.getElementById('sk-copy').addEventListener('click', function () {
+    var b = this;
+    function done() { b.textContent = 'Copiado ✓'; setTimeout(function () { b.textContent = 'Copiar'; }, 2000); }
+    function fallback() { out.focus(); out.select(); try { if (document.execCommand('copy')) return done(); } catch (e) {} b.textContent = 'Selecionado — copie manualmente'; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(out.value).then(done, fallback); else fallback();
+  });
+  document.getElementById('sk-clear').addEventListener('click', function () {
+    if (!confirmClear) { confirmClear = true; this.textContent = 'Tem a certeza? Clique outra vez'; return; }
+    edits = {}; store(); location.reload();
+  });
+  /* while editing, a click on a text places the caret instead of following links or opening panels */
+  ['click', 'pointerdown', 'mousedown', 'touchstart'].forEach(function (t) {
+    window.addEventListener(t, function (ev) {
+      if (!editing || !ev.target.closest || ev.target.closest('#sk-ed,#sk-panel,.lang')) return;
+      var el = ev.target.closest('[data-sk-key]'), link = ev.target.closest('a,button');
+      if (el || link) {
+        if (t === 'click') ev.preventDefault();
+        ev.stopPropagation();
+        if (el && t === 'click' && document.activeElement !== el) el.focus();
+      }
+    }, { capture: true, passive: false });
+  });
+  document.addEventListener('keydown', function (ev) {
+    var el = editing && ev.target.closest && ev.target.closest('[data-sk-key]');
+    if (!el) return;
+    ev.stopPropagation();
+    if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); el.blur(); }
+    if (ev.key === 'Escape') { el.innerHTML = el.getAttribute('data-' + lang()); el.blur(); }
+  }, true);
+  document.addEventListener('focusout', function (ev) { var el = ev.target.closest && ev.target.closest('[data-sk-key]'); if (el && editing) save(el); }, true);
+  document.addEventListener('paste', function (ev) {
+    var el = ev.target.closest && ev.target.closest('[data-sk-key]'); if (!el) return;
+    ev.preventDefault(); document.execCommand('insertText', false, (ev.clipboardData || window.clipboardData).getData('text/plain'));
+  }, true);
+  function start() {
+    scan(document); status();
+    new MutationObserver(function (ms) { ms.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.nodeType === 1) scan(n); }); }); }).observe(document.body, { childList: true, subtree: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>
+</body>
+</html>

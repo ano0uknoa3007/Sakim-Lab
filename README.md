@@ -25,6 +25,7 @@ Other files:
 | File | Page |
 |---|---|
 | `lugares/<project>.html` | One page per project (also opens over the home page): name, description, the services it had, a still map of where it is, and its photos in a grid |
+| `editor.html` | The home page with every text editable in place ("Editar textos"); changes stay in that browser and "Enviar alterações" lists them to copy and send. Built from `tools/editor.html` |
 | `contacto.html` | Book a conversation (it also opens as a side panel from every page) |
 | `lugares.html`, `sobre.html`, `metodo.html` | Old addresses; they forward to their section |
 
