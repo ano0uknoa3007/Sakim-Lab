@@ -1,0 +1,146 @@
+<!-- Text editor added to editor.html by build.py: every text on the page can be edited in place.
+     Changes stay in this browser (localStorage); "Enviar alterações" lists them to copy and send. -->
+<style>
+#sk-ed{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:calc(100vw - 32px);padding:8px 8px 8px 16px;border-radius:28px;background:#161616;color:#f3f0ea;font:500 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+#sk-ed button,#sk-panel button{appearance:none;border:0;border-radius:999px;padding:10px 16px;font:600 13px/1 system-ui,-apple-system,"Segoe UI",sans-serif;cursor:pointer;background:#f3f0ea;color:#161616}
+#sk-ed button[aria-pressed="true"],#sk-panel .pri{background:#e2582b;color:#fff}
+#sk-ed button:focus-visible,#sk-panel button:focus-visible{outline:2px solid #e2582b;outline-offset:2px}
+#sk-panel{position:fixed;inset:0;z-index:2147483001;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.5);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+#sk-panel[hidden]{display:none}
+#sk-panel .box{background:#f3f0ea;color:#161616;border-radius:16px;padding:20px;width:min(640px,100%);max-height:calc(100% - 32px);display:flex;flex-direction:column;gap:12px}
+#sk-panel h2{margin:0;font:700 18px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+#sk-panel p{margin:0}
+#sk-panel textarea{width:100%;min-height:200px;flex:1;box-sizing:border-box;padding:10px;border:1px solid #bbb;border-radius:8px;font:13px/1.4 ui-monospace,Menlo,monospace;background:#fff;color:#161616}
+#sk-panel .row{display:flex;gap:8px;flex-wrap:wrap}
+#sk-panel .ghost{background:transparent;border:1px solid #161616}
+html.sk-editing [data-sk-key]{outline:1px dashed rgba(226,88,43,.8);outline-offset:3px;cursor:text!important;border-radius:2px}
+html.sk-editing [data-sk-key]:focus{outline:2px solid #e2582b;background:rgba(226,88,43,.08)}
+html.sk-editing [data-sk-key].sk-changed{outline-color:#2b8a3e}
+html.sk-editing .cursor{display:none!important}
+</style>
+<div id="sk-ed" role="region" aria-label="Editor de textos">
+  <span id="sk-st">Nenhuma alteração</span>
+  <button type="button" id="sk-toggle" aria-pressed="false">Editar textos</button>
+  <button type="button" id="sk-send">Enviar alterações</button>
+</div>
+<div id="sk-panel" hidden>
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="sk-ph">
+    <h2 id="sk-ph">As suas alterações</h2>
+    <p>Copie este texto e cole-o na conversa com o Claude. Ele aplica as alterações ao site.</p>
+    <textarea id="sk-out" readonly></textarea>
+    <div class="row">
+      <button type="button" class="pri" id="sk-copy">Copiar</button>
+      <button type="button" class="ghost" id="sk-close">Fechar</button>
+      <button type="button" class="ghost" id="sk-clear">Apagar todas as alterações</button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.documentElement, KEY = 'sakim-edits';
+  var btn = document.getElementById('sk-toggle'), st = document.getElementById('sk-st');
+  var panel = document.getElementById('sk-panel'), out = document.getElementById('sk-out');
+  var edits = {}, editing = false, confirmClear = false;
+  try { edits = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { edits = {}; }
+  function store() { try { localStorage.setItem(KEY, JSON.stringify(edits)); } catch (e) {} status(); }
+  function status() { var n = Object.keys(edits).length; st.textContent = n ? n + (n === 1 ? ' texto alterado' : ' textos alterados') : 'Nenhuma alteração'; }
+  function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ('0000000' + (h >>> 0).toString(16)).slice(-8); }
+  function lang() { return root.lang === 'en' ? 'en' : 'pt'; }
+  function tag(el) {
+    if (el.dataset.skKey || el.closest('#sk-ed,#sk-panel')) return;
+    var pt = el.getAttribute('data-pt'), en = el.getAttribute('data-en');
+    if (pt == null || en == null) return;
+    el.dataset.skOrigPt = pt; el.dataset.skOrigEn = en;
+    el.dataset.skKey = hash(pt + '\u0001' + en);
+    apply(el);
+    if (editing) el.contentEditable = 'true';
+  }
+  function apply(el) {
+    var e = edits[el.dataset.skKey]; if (!e) return;
+    el.setAttribute('data-pt', e.pt); el.setAttribute('data-en', e.en);
+    el.classList.add('sk-changed');
+    if (document.activeElement !== el) el.innerHTML = e[lang()];
+  }
+  function scan(r) { r.querySelectorAll('[data-pt][data-en]').forEach(tag); if (r.matches && r.matches('[data-pt][data-en]')) tag(r); }
+  function clean(html) {
+    return html.replace(/<span class="ch[^"]*">([^<]*)<\/span>/g, '$1').replace(/&nbsp;/g, ' ')
+      .replace(/(<br\s*\/?>\s*)+$/, '').replace(/<(\/?)b>/g, '<$1strong>').replace(/<(\/?)i>/g, '<$1em>').trim();
+  }
+  function save(el) {
+    var l = lang(), v = clean(el.innerHTML);
+    if (v === el.getAttribute('data-' + l)) return;
+    el.setAttribute('data-' + l, v);
+    var k = el.dataset.skKey, pt = el.getAttribute('data-pt'), en = el.getAttribute('data-en');
+    if (pt === el.dataset.skOrigPt && en === el.dataset.skOrigEn) { delete edits[k]; el.classList.remove('sk-changed'); }
+    else { edits[k] = { orig_pt: el.dataset.skOrigPt, orig_en: el.dataset.skOrigEn, pt: pt, en: en }; el.classList.add('sk-changed'); }
+    store();
+  }
+  function setEditing(on) {
+    editing = on; root.classList.toggle('sk-editing', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'Terminar edição' : 'Editar textos';
+    document.querySelectorAll('[data-sk-key]').forEach(function (el) { if (on) el.contentEditable = 'true'; else el.removeAttribute('contenteditable'); });
+  }
+  function plain(h) { var d = document.createElement('div'); d.innerHTML = h.replace(/<em>|<\/em>/g, '*').replace(/<strong>|<\/strong>/g, '**').replace(/<br\s*\/?>/g, ' / '); return d.textContent; }
+  function report() {
+    var lines = ['ALTERAÇÕES DE TEXTO — SAKIM LAB', ''], n = 0;
+    Object.keys(edits).forEach(function (k) {
+      var e = edits[k];
+      [['pt', 'PT'], ['en', 'EN']].forEach(function (p) {
+        if (e[p[0]] === e['orig_' + p[0]]) return;
+        n++;
+        lines.push(n + '. [' + p[1] + '] ANTES: ' + plain(e['orig_' + p[0]]));
+        lines.push('   DEPOIS: ' + plain(e[p[0]]), '');
+      });
+    });
+    if (!n) lines.push('(nenhuma alteração)');
+    lines.push('#sakim-edits ' + JSON.stringify(Object.keys(edits).map(function (k) { return edits[k]; })));
+    return lines.join('\n');
+  }
+  btn.addEventListener('click', function () { setEditing(!editing); });
+  document.getElementById('sk-send').addEventListener('click', function () {
+    if (document.activeElement && document.activeElement.dataset && document.activeElement.dataset.skKey) document.activeElement.blur();
+    out.value = report(); panel.hidden = false; confirmClear = false;
+    document.getElementById('sk-clear').textContent = 'Apagar todas as alterações';
+  });
+  document.getElementById('sk-close').addEventListener('click', function () { panel.hidden = true; });
+  document.getElementById('sk-copy').addEventListener('click', function () {
+    var b = this;
+    function done() { b.textContent = 'Copiado ✓'; setTimeout(function () { b.textContent = 'Copiar'; }, 2000); }
+    function fallback() { out.focus(); out.select(); try { if (document.execCommand('copy')) return done(); } catch (e) {} b.textContent = 'Selecionado — copie manualmente'; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(out.value).then(done, fallback); else fallback();
+  });
+  document.getElementById('sk-clear').addEventListener('click', function () {
+    if (!confirmClear) { confirmClear = true; this.textContent = 'Tem a certeza? Clique outra vez'; return; }
+    edits = {}; store(); location.reload();
+  });
+  /* while editing, a click on a text places the caret instead of following links or opening panels */
+  ['click', 'pointerdown', 'mousedown', 'touchstart'].forEach(function (t) {
+    window.addEventListener(t, function (ev) {
+      if (!editing || !ev.target.closest || ev.target.closest('#sk-ed,#sk-panel,.lang')) return;
+      var el = ev.target.closest('[data-sk-key]'), link = ev.target.closest('a,button');
+      if (el || link) {
+        if (t === 'click') ev.preventDefault();
+        ev.stopPropagation();
+        if (el && t === 'click' && document.activeElement !== el) el.focus();
+      }
+    }, { capture: true, passive: false });
+  });
+  document.addEventListener('keydown', function (ev) {
+    var el = editing && ev.target.closest && ev.target.closest('[data-sk-key]');
+    if (!el) return;
+    ev.stopPropagation();
+    if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); el.blur(); }
+    if (ev.key === 'Escape') { el.innerHTML = el.getAttribute('data-' + lang()); el.blur(); }
+  }, true);
+  document.addEventListener('focusout', function (ev) { var el = ev.target.closest && ev.target.closest('[data-sk-key]'); if (el && editing) save(el); }, true);
+  document.addEventListener('paste', function (ev) {
+    var el = ev.target.closest && ev.target.closest('[data-sk-key]'); if (!el) return;
+    ev.preventDefault(); document.execCommand('insertText', false, (ev.clipboardData || window.clipboardData).getData('text/plain'));
+  }, true);
+  function start() {
+    scan(document); status();
+    new MutationObserver(function (ms) { ms.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.nodeType === 1) scan(n); }); }); }).observe(document.body, { childList: true, subtree: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>
