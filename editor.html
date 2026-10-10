@@ -1084,7 +1084,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   var edits = {}, photos = {}, colors = {}, editing = false, confirmClear = false, pickFor = null;
   function readLS(k) { try { return JSON.parse(localStorage.getItem(k) || '{}') || {}; } catch (e) { return {}; } }
   function writeLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-  var DKEY = 'sakim-deleted', deleted = {}, AKEY = 'sakim-added', added = {}, addedData = {}, MAXP = 20;
+  var notice = '', DKEY = 'sakim-deleted', deleted = {}, AKEY = 'sakim-added', added = {}, addedData = {}, MAXP = 20;
   edits = readLS(KEY); colors = readLS(CKEY); deleted = readLS(DKEY); added = readLS(AKEY);
   /* the photos kept in the site's archive (assets/img/lugares/<project>/arquivo/), by project */
   var ARCHIVE = {}; try { ARCHIVE = JSON.parse(document.getElementById('sk-archive').textContent); } catch (e) {}
@@ -1122,7 +1122,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     if (a) parts.push(a + (a === 1 ? ' foto nova' : ' fotos novas'));
     if (x) parts.push(x + (x === 1 ? ' foto apagada' : ' fotos apagadas'));
     if (c) parts.push('cores');
-    st.textContent = parts.length ? 'Alterado: ' + parts.join(', ') : 'Nenhuma alteração';
+    st.textContent = notice + (parts.length ? 'Alterado: ' + parts.join(', ') : 'Nenhuma alteração');
   }
   function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ('0000000' + (h >>> 0).toString(16)).slice(-8); }
   function lang() { return root.lang === 'en' ? 'en' : 'pt'; }
@@ -1633,8 +1633,33 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   function start() {
     var cs = getComputedStyle(root);
     cbox.querySelectorAll('input').forEach(function (i) { defaults[i.dataset.var] = hex(cs.getPropertyValue(i.dataset.var)).toLowerCase(); });
+    /* changes already on the site leave the list by themselves: a text whose original no longer exists
+       anywhere (page or project pages) was published or replaced, a colour equal to the site's is no change,
+       and a deleted photo that no page shows any more is gone */
+    var present = {}, shown = {}, cleaned = 0;
+    function collect(r) {
+      r.querySelectorAll('[data-pt][data-en]').forEach(function (el) {
+        if (!el.closest('#sk-ed,#sk-panel,#sk-colors,#sk-photos,#sk-arch')) present[hash(el.getAttribute('data-pt') + '\u0001' + el.getAttribute('data-en'))] = 1;
+      });
+      r.querySelectorAll('*').forEach(function (el) {
+        if (el.children.length || el.tagName === 'I' || el.closest(NOT_PLAIN)) return;
+        var t = el.textContent.trim();
+        if (/[0-9A-Za-zÀ-ÿ]/.test(t) && !/^[A-D]$/.test(t)) present['p' + hash(t)] = 1;
+      });
+      r.querySelectorAll('img').forEach(function (im) {
+        var path = (im.getAttribute('data-sk-src') || im.getAttribute('src') || '').replace(/^(\.\.\/)+/, '').split('?')[0];
+        if (path && !/^data:/.test(path)) shown[imgKey(path)] = 1;
+      });
+    }
+    collect(document);
+    document.querySelectorAll('template[id^="place-"]').forEach(function (t) { collect(t.content); });
+    Object.keys(edits).forEach(function (k) { if (!present[k]) { delete edits[k]; cleaned++; } });
+    Object.keys(colors).forEach(function (v) { if (colors[v].toLowerCase() === defaults[v]) { delete colors[v]; cleaned++; } });
+    Object.keys(deleted).forEach(function (k) { if (!shown[k]) { delete deleted[k]; cleaned++; } });
+    if (cleaned) { writeLS(KEY, edits); writeLS(CKEY, colors); writeLS(DKEY, deleted); }
     applyColors();
     scan(document); status();
+    if (cleaned) { notice = (cleaned === 1 ? '1 alteração já publicada saiu' : cleaned + ' alterações já publicadas saíram') + ' da lista · '; status(); }
     idbOpen().then(idbAll).then(function (all) {
       photos = {}; addedData = {};
       Object.keys(all || {}).forEach(function (k) { if (k.indexOf('add/') === 0) addedData[k.slice(4)] = all[k]; else photos[k] = all[k]; });
