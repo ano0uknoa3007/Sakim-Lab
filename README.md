@@ -25,7 +25,7 @@ Other files:
 | File | Page |
 |---|---|
 | `lugares/<project>.html` | One page per project (also opens over the home page): name, description, the services it had, a still map of where it is, and its photos in a grid |
-| `editor.html` | The home page with every text editable in place ("Editar textos"); changes stay in that browser and "Enviar alterações" lists them to copy and send. Built from `tools/editor.html` |
+| `editor.html` | The home page, still (no animations), with every text and photo editable in place, the main colours, and the project pages opening over it. Changes stay in that browser; "Alterações" downloads them as a file to send to Claude, "HTML" downloads the page as it looks. Built from `tools/editor.html`; `python3 tools/editor_local.py` makes it one offline file (`sakim-editor.html`, not committed) |
 | `contacto.html` | Book a conversation (it also opens as a side panel from every page) |
 | `lugares.html`, `sobre.html`, `metodo.html` | Old addresses; they forward to their section |
 
