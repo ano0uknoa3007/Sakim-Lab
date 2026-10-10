@@ -977,6 +977,21 @@
 #sk-panel .row{display:flex;gap:8px;flex-wrap:wrap}
 #sk-panel .ghost,#sk-colors .ghost{background:transparent;border:1px solid currentColor;color:inherit}
 #sk-colors{position:fixed;left:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:2147483000;width:min(300px,calc(100vw - 32px));box-sizing:border-box;padding:16px;border-radius:16px;background:#161616;color:#f3f0ea;font:500 13px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.25);display:grid;gap:10px}
+#sk-photos{position:fixed;top:calc(80px + env(safe-area-inset-top,0px));right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:2147483000;width:min(340px,calc(100vw - 32px));box-sizing:border-box;padding:16px;border-radius:16px;background:#161616;color:#f3f0ea;font:500 13px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.25);overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+#sk-photos[hidden]{display:none}
+#sk-photo-list{display:grid;gap:10px}
+#sk-photos .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#sk-photos h3{margin:0;font:700 15px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+#sk-photos h4{margin:4px 0 0;font:600 11px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#a9a59d}
+#sk-photos p{margin:0;color:#c9c5bd}
+#sk-photos .ph{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:center}
+#sk-photos .ph img{width:72px;height:54px;object-fit:cover;border-radius:6px;background:#333}
+#sk-photos .ph.sk-changed img{outline:2px solid #2b8a3e;outline-offset:1px}
+#sk-photos .ph span{display:block;overflow-wrap:anywhere;margin-bottom:6px}
+#sk-photos .ph .acts{display:flex;gap:6px;flex-wrap:wrap}
+#sk-photos button{appearance:none;border:0;border-radius:999px;padding:7px 12px;font:600 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;cursor:pointer;background:#f3f0ea;color:#161616}
+#sk-photos button.ghost{background:transparent;border:1px solid #f3f0ea;color:#f3f0ea}
+#sk-photos button:focus-visible{outline:2px solid #e2582b;outline-offset:2px}
 #sk-colors label{display:flex;align-items:center;justify-content:space-between;gap:12px}
 #sk-colors input{width:56px;height:32px;padding:0;border:1px solid #555;border-radius:6px;background:none;cursor:pointer}
 html.sk-editing [data-sk-key]{outline:1px dashed rgba(226,88,43,.8);outline-offset:3px;cursor:text!important;border-radius:2px}
@@ -997,9 +1012,15 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
 <div id="sk-ed" role="region" aria-label="Editor">
   <span id="sk-st">Nenhuma alteração</span>
   <button type="button" id="sk-toggle" aria-pressed="false">Editar</button>
+  <button type="button" id="sk-photo-btn" aria-expanded="false">Fotos</button>
   <button type="button" id="sk-color-btn" aria-expanded="false">Cores</button>
   <button type="button" id="sk-send">Alterações</button>
   <button type="button" id="sk-html">HTML</button>
+</div>
+<div id="sk-photos" role="dialog" aria-label="Fotos" hidden>
+  <div class="top"><h3>Fotos</h3><button type="button" class="ghost" id="sk-photos-close">Fechar</button></div>
+  <p>Escolha "Trocar" para pôr outra foto do seu computador. Em modo edição também pode clicar numa foto da página.</p>
+  <div id="sk-photo-list"></div>
 </div>
 <div id="sk-colors" role="dialog" aria-label="Cores" hidden>
   <label>Fundo <input type="color" id="sk-c-paper" data-var="--paper"></label>
@@ -1067,7 +1088,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
 
   /* ---------- texts ---------- */
   function tag(el) {
-    if (el.dataset.skKey || el.closest('#sk-ed,#sk-panel,#sk-colors')) return;
+    if (el.dataset.skKey || el.closest('#sk-ed,#sk-panel,#sk-colors,#sk-photos')) return;
     var pt = el.getAttribute('data-pt'), en = el.getAttribute('data-en');
     if (pt == null || en == null) return;
     el.dataset.skOrigPt = pt; el.dataset.skOrigEn = en;
@@ -1103,7 +1124,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   }
   function imgKey(path) { var m = path.match(/assets\/img\/(?:lugares|mini)\/([^/]+)\/([^/]+)$/); return m ? m[1] + '/' + m[2] : path; }
   function tagImg(img) {
-    if (img.dataset.skImg || img.closest('#sk-ed,#sk-panel,#sk-colors')) return;
+    if (img.dataset.skImg || img.closest('#sk-ed,#sk-panel,#sk-colors,#sk-photos')) return;
     var path = imgPath(img); if (!path) return;
     if (!img.getAttribute('data-sk-src')) img.setAttribute('data-sk-src', path);
     /* the offline file keeps each photo once, in window.SK_IMG */
@@ -1138,7 +1159,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     shrink(f).then(function (data) {
       photos[k] = data; idbPut(k, data);
       document.querySelectorAll('img[data-sk-img]').forEach(function (img) { if (img.dataset.skImg === k) showPhoto(img); });
-      status();
+      status(); if (!pbox.hidden) listPhotos();
     }, function () { st.textContent = 'Não foi possível ler essa imagem'; });
   });
 
@@ -1148,6 +1169,63 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     r.querySelectorAll('img').forEach(tagImg);
     if (r.tagName === 'IMG') tagImg(r);
   }
+
+  /* ---------- the photo list: every photo of the page and of the project pages ---------- */
+  var pbox = $('sk-photos'), pbtn = $('sk-photo-btn'), plist = $('sk-photo-list');
+  function photoSrc(k, path) { return photos[k] || (window.SK_IMG && SK_IMG[path]) || path; }
+  function revertPhoto(k) {
+    delete photos[k]; idbPut(k, null);
+    document.querySelectorAll('img[data-sk-img]').forEach(function (img) {
+      if (img.dataset.skImg !== k) return;
+      var path = img.getAttribute('data-sk-src');
+      img.src = (window.SK_IMG && SK_IMG[path]) || path; img.classList.remove('sk-changed');
+    });
+    status(); listPhotos();
+  }
+  function listPhotos() {
+    var groups = [], seen = {};
+    function collect(title, imgs) {
+      var items = [];
+      imgs.forEach(function (im) {
+        if (im.closest && im.closest('#sk-photos,.intro')) return;
+        var path = im.getAttribute('data-sk-src') || (im.getAttribute('src') || '').replace(/^(\.\.\/)+/, '').split('?')[0];
+        if (!path || /^data:/.test(path) || !/assets\/img\//.test(path)) return;
+        var k = imgKey(path); if (seen[k]) return; seen[k] = 1;
+        items.push({ k: k, path: path });
+      });
+      if (items.length) groups.push({ title: title, items: items });
+    }
+    collect('Página inicial', [].slice.call(document.querySelectorAll('main img')));
+    document.querySelectorAll('template[id^="place-"]').forEach(function (t) {
+      var name = t.content.querySelector('.place-mega');
+      collect(name ? name.textContent.trim() : t.id.slice(6), [].slice.call(t.content.querySelectorAll('img')));
+    });
+    plist.innerHTML = '';
+    groups.forEach(function (g) {
+      var h = document.createElement('h4'); h.textContent = g.title; plist.appendChild(h);
+      g.items.forEach(function (it) {
+        var row = document.createElement('div'); row.className = 'ph' + (photos[it.k] ? ' sk-changed' : '');
+        var im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.src = photoSrc(it.k, it.path);
+        var box = document.createElement('div'), lab = document.createElement('span');
+        lab.textContent = it.k.split('/').pop().replace(/\.jpe?g$/i, '').replace(/-/g, ' ');
+        var acts = document.createElement('div'); acts.className = 'acts';
+        var b1 = document.createElement('button'); b1.type = 'button'; b1.textContent = 'Trocar';
+        b1.addEventListener('click', function () { pickFor = it.k; fileIn.click(); });
+        acts.appendChild(b1);
+        if (photos[it.k]) {
+          var b2 = document.createElement('button'); b2.type = 'button'; b2.className = 'ghost'; b2.textContent = 'Original';
+          b2.addEventListener('click', function () { revertPhoto(it.k); });
+          acts.appendChild(b2);
+        }
+        box.appendChild(lab); box.appendChild(acts); row.appendChild(im); row.appendChild(box); plist.appendChild(row);
+      });
+    });
+  }
+  pbtn.addEventListener('click', function () {
+    pbox.hidden = !pbox.hidden; pbtn.setAttribute('aria-expanded', pbox.hidden ? 'false' : 'true');
+    if (!pbox.hidden) listPhotos();
+  });
+  $('sk-photos-close').addEventListener('click', function () { pbox.hidden = true; pbtn.setAttribute('aria-expanded', 'false'); });
 
   /* ---------- colours ---------- */
   var cbox = $('sk-colors'), cbtn = $('sk-color-btn'), defaults = {};
@@ -1210,7 +1288,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
   ['click', 'pointerdown', 'mousedown', 'touchstart'].forEach(function (t) {
     window.addEventListener(t, function (ev) {
       var tg = ev.target;
-      if (!tg.closest || tg.closest('#sk-ed,#sk-panel,#sk-colors,.lang')) return;
+      if (!tg.closest || tg.closest('#sk-ed,#sk-panel,#sk-colors,#sk-photos,.lang')) return;
       if (t === 'click' && tg.closest('.sheet .back')) { ev.preventDefault(); closePlace(); return; }
       if (!editing) {
         var a = t === 'click' && tg.closest('a[href]'), m = a && a.getAttribute('href').match(/(?:^|\/)lugares\/([a-z0-9-]+)\.html/);
@@ -1218,6 +1296,10 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
         return;
       }
       var el = tg.closest('[data-sk-key]'), img = tg.closest('img[data-sk-img]'), link = tg.closest('a,button');
+      /* a photo under a caption, a shade or a link still counts as clicked */
+      if (!el && !img && ev.clientX != null && document.elementsFromPoint) {
+        img = document.elementsFromPoint(ev.clientX, ev.clientY).filter(function (x) { return x.matches && x.matches('img[data-sk-img]'); })[0] || null;
+      }
       if (img && !el) {
         if (t === 'click') { ev.preventDefault(); pickFor = img.dataset.skImg; fileIn.click(); }
         ev.stopPropagation(); return;
@@ -1298,7 +1380,7 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     var c = root.cloneNode(true);
     c.classList.remove('sk-editing');
-    c.querySelectorAll('#sk-ed,#sk-panel,#sk-colors,#sk-file,script').forEach(function (x) { x.remove(); });
+    c.querySelectorAll('#sk-ed,#sk-panel,#sk-colors,#sk-photos,#sk-file,script').forEach(function (x) { x.remove(); });
     c.querySelectorAll('[contenteditable]').forEach(function (x) { x.removeAttribute('contenteditable'); });
     c.querySelectorAll('.sk-changed').forEach(function (x) { x.classList.remove('sk-changed'); });
     var sb = c.querySelector('.sheet'); if (sb) { sb.classList.remove('open'); sb.querySelector('.sheet-body').innerHTML = ''; }
