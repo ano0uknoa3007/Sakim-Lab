@@ -16,10 +16,8 @@
 html.sk-editing [data-sk-key]{outline:1px dashed rgba(226,88,43,.8);outline-offset:3px;cursor:text!important;border-radius:2px}
 html.sk-editing [data-sk-key]:focus{outline:2px solid #e2582b;background:rgba(226,88,43,.08)}
 html.sk-editing [data-sk-key].sk-changed{outline-color:#2b8a3e}
-html.sk-editing .cursor{display:none!important}
-html.has-cursor.sk-editing,html.has-cursor.sk-editing *{cursor:auto!important}
-html.has-cursor.sk-editing [data-sk-key],html.has-cursor.sk-editing [data-sk-key] *{cursor:text!important}
-html.has-cursor.sk-editing #sk-ed button,html.has-cursor.sk-editing #sk-panel button,html.has-cursor.sk-editing .lang button{cursor:pointer!important}
+/* the editor always uses the normal mouse pointer, never the site's drawn cursor */
+.cursor{display:none!important}
 </style>
 <div id="sk-ed" role="region" aria-label="Editor de textos">
   <span id="sk-st">Nenhuma alteração</span>
@@ -140,8 +138,12 @@ html.has-cursor.sk-editing #sk-ed button,html.has-cursor.sk-editing #sk-panel bu
     var el = ev.target.closest && ev.target.closest('[data-sk-key]'); if (!el) return;
     ev.preventDefault(); document.execCommand('insertText', false, (ev.clipboardData || window.clipboardData).getData('text/plain'));
   }, true);
+  /* the site hides the mouse pointer (class has-cursor) to draw its own; the editor keeps the normal pointer */
+  function keepPointer() { if (root.classList.contains('has-cursor')) root.classList.remove('has-cursor'); }
+  new MutationObserver(keepPointer).observe(root, { attributes: true, attributeFilter: ['class'] });
+  keepPointer();
   function start() {
-    scan(document); status();
+    keepPointer(); scan(document); status();
     new MutationObserver(function (ms) { ms.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.nodeType === 1) scan(n); }); }); }).observe(document.body, { childList: true, subtree: true });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
