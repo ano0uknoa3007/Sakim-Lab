@@ -637,17 +637,24 @@ def main():
             assert os.path.exists(os.path.join(ROOT, photo_path(p, j))), photo_path(p, j)
     home = build_home()
     write("index.html", home)
-    # editor.html: the home page with every text editable in place (see tools/editor.html)
+    write("contacto.html", build_contact())
+    places = {}
+    for n, slug in enumerate(PROJECT_ORDER, 1):
+        places[slug] = build_place(slug, n)
+        write(f"lugares/{slug}.html", places[slug])
+    # editor.html: the home page with every text and photo editable in place (see tools/editor.html)
     with open(os.path.join(ROOT, "tools", "editor.html"), encoding="utf-8") as f:
         editor = f.read()
     # it loads none of the site's scripts (no animations, no drawn cursor): a still page that is quick to edit
     page = re.sub(r'<script src="assets/js/[^"]+" defer></script>\n', "", home)
     page = re.sub(r"<script>try\{if\(\(!location\.hash.*?</script>\n", "", page)
+    # each project page travels inside it, so a project opens over the page without loading anything
+    templates = ""
+    for slug, html_ in places.items():
+        body = html_[html_.index('<div class="place-content"'):html_.index("\n</main>")]
+        templates += f'<template id="place-{slug}">{body.replace("../assets/", "assets/")}</template>\n'
     write("editor.html", page.replace("<head>\n", '<head>\n<meta name="robots" content="noindex">\n', 1)
-          .replace("</body>", editor + "</body>", 1))
-    write("contacto.html", build_contact())
-    for n, slug in enumerate(PROJECT_ORDER, 1):
-        write(f"lugares/{slug}.html", build_place(slug, n))
+          .replace("</body>", templates + editor + "</body>", 1))
     write("lugares.html", forward("index.html#projectos", "Projectos"))
     write("sobre.html", forward("index.html#sobre", "Sobre"))
     write("metodo.html", forward("index.html#processo", "Processo"))
