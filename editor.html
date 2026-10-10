@@ -1097,8 +1097,8 @@ html.sk-editing img[data-sk-img].sk-changed{outline-color:#2b8a3e}
     if (editing) el.contentEditable = 'true';
   }
   /* texts with one version for both languages (names, figures, times, press titles, contacts):
-     every leaf element with letters or digits outside a [data-pt]; the same text shares one key, so a name changes everywhere */
-  var NOT_PLAIN = '#sk-ed,#sk-panel,#sk-colors,#sk-photos,[data-pt],.lang,.drawer-close,noscript,script,style,.intro,.map,.pg-n,.night-n,.pg-count,.teaser-read,.mikas-source,.done .mono,.cursor,.chat,.chat-log';
+     every leaf element with letters or digits outside a [data-pt] (not the press articles, which are quoted as published); the same text shares one key, so a name changes everywhere */
+  var NOT_PLAIN = '.press,.teasers,.timeline,#sk-ed,#sk-panel,#sk-colors,#sk-photos,[data-pt],.lang,.drawer-close,noscript,script,style,.intro,.map,.pg-n,.night-n,.pg-count,.teaser-read,.mikas-source,.done .mono,.cursor,.chat,.chat-log';
   function tagPlain(el) {
     if (el.dataset.skKey || el.children.length || el.tagName === 'I' || el.closest(NOT_PLAIN)) return;
     var t = el.textContent.trim();
