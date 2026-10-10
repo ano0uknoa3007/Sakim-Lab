@@ -552,6 +552,9 @@ html.sk-editing [data-sk-key]{outline:1px dashed rgba(226,88,43,.8);outline-offs
 html.sk-editing [data-sk-key]:focus{outline:2px solid #e2582b;background:rgba(226,88,43,.08)}
 html.sk-editing [data-sk-key].sk-changed{outline-color:#2b8a3e}
 html.sk-editing .cursor{display:none!important}
+html.has-cursor.sk-editing,html.has-cursor.sk-editing *{cursor:auto!important}
+html.has-cursor.sk-editing [data-sk-key],html.has-cursor.sk-editing [data-sk-key] *{cursor:text!important}
+html.has-cursor.sk-editing #sk-ed button,html.has-cursor.sk-editing #sk-panel button,html.has-cursor.sk-editing .lang button{cursor:pointer!important}
 </style>
 <div id="sk-ed" role="region" aria-label="Editor de textos">
   <span id="sk-st">Nenhuma alteração</span>
