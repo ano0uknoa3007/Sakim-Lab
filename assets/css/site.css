@@ -18,8 +18,8 @@
   --mute: rgba(236, 233, 227, .58);
   --line: rgba(236, 233, 227, .14);
   /* colour, used sparingly */
-  --ember: #3d8bfd;   /* the blue: only for buttons, a few letters, highlights and underlines */
-  --amber: #9cc4ff;
+  --ember: #e8621a;   /* the orange: only for buttons, a few letters, highlights and underlines */
+  --amber: #f0a37e;
   --display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
   --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
   --sans: var(--serif);
@@ -129,7 +129,7 @@ html.has-cursor input, html.has-cursor textarea, html.has-cursor select, html.ha
 
 /* BUTTONS: black pills, mono, with a round play mark */
 .btn { display: inline-flex; align-items: center; gap: 18px; height: 56px; padding: 0 8px 0 26px; border-radius: 999px; background: var(--ember); color: var(--ink); font-family: var(--mono); font-size: 14px; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; transition: background .3s, gap .5s var(--ease); }
-.btn::after { content: ''; width: 40px; height: 40px; border-radius: 50%; background: #111 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M16 13l11 7-11 7z' fill='%233d8bfd'/%3E%3C/svg%3E") center / 100% no-repeat; flex: none; transition: transform .5s var(--ease); }
+.btn::after { content: ''; width: 40px; height: 40px; border-radius: 50%; background: #111 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M16 13l11 7-11 7z' fill='%23e8621a'/%3E%3C/svg%3E") center / 100% no-repeat; flex: none; transition: transform .5s var(--ease); }
 .btn:hover::after { transform: rotate(-90deg); }
 .btn-play i { display: none; }
 .btn-big { height: 64px; font-size: 15px; padding-left: 30px; }
@@ -222,7 +222,7 @@ html.has-cursor input, html.has-cursor textarea, html.has-cursor select, html.ha
 .area-icon .icon { width: 34px; height: 34px; }
 .area-icon { position: relative; }
 .area-icon .icon { transition: transform .7s var(--ease); }
-/* hover: the name turns blue, the icon rolls in and does its own little movement */
+/* hover: the name turns orange, the icon rolls in and does its own little movement */
 .area.hover .area-icon, .area.open .area-icon { background: var(--ember); color: var(--ink); transform: translateX(10px) rotate(-12deg); }
 .area.hover .area-icon .icon { animation: icon-move 1.6s var(--ease) infinite; }
 .area[data-move="spin"].hover .area-icon .icon { animation-name: icon-spin; }
@@ -406,7 +406,7 @@ html.has-cursor input, html.has-cursor textarea, html.has-cursor select, html.ha
 .map-view canvas { filter: sepia(.3) saturate(.75) contrast(.97); }
 .map-pin, .map-area { position: absolute; left: 50%; top: 50%; z-index: 2; border-radius: 50%; transform: translate(-50%, -50%); }
 .map-pin { width: 22px; height: 22px; background: var(--ember); border: 4px solid #f2efe9; box-shadow: 0 0 0 1px rgba(22, 22, 22, .25); }
-.map-area { width: 34%; aspect-ratio: 1; background: rgba(61, 139, 253, .16); border: 2px solid var(--ember); }
+.map-area { width: 34%; aspect-ratio: 1; background: rgba(232, 98, 26, .16); border: 2px solid var(--ember); }
 .map figcaption { display: flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; margin-top: 12px; }
 .map-credit { color: var(--ink-soft); text-transform: none; letter-spacing: 0; font-size: 11px; }
 .map-credit a { text-decoration: underline; text-decoration-color: var(--ember); text-underline-offset: 2px; }
@@ -453,7 +453,7 @@ html.has-cursor input, html.has-cursor textarea, html.has-cursor select, html.ha
 .chat-input { padding: 12px 20px 20px; }
 .chat-controls { display: grid; gap: 10px; animation: msg-in .6s .5s var(--ease) both; }
 .chat-option { text-align: left; padding: 14px 18px; border: 1px solid var(--line); border-radius: 14px; font-size: 15px; transition: border-color .3s, background .3s, color .3s; }
-.chat-option:hover, .chat-option:focus-visible { border-color: var(--ember); background: rgba(61, 139, 253, .1); }
+.chat-option:hover, .chat-option:focus-visible { border-color: var(--ember); background: rgba(232, 98, 26, .1); }
 .chat-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chat-chip { padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; transition: border-color .3s, background .3s, color .3s; }
 .chat-chip:hover { border-color: var(--cream); }
@@ -488,7 +488,7 @@ html.has-cursor input, html.has-cursor textarea, html.has-cursor select, html.ha
 .cal-day { height: 34px; border-radius: 999px; font-size: 14px; font-variant-numeric: tabular-nums; transition: background .2s, color .2s; }
 .cal-day:hover:not(:disabled) { background: rgba(239, 231, 218, .1); }
 .cal-day:disabled { opacity: .22; cursor: default; }
-.cal-day.in { background: rgba(61, 139, 253, .18); border-radius: 0; }
+.cal-day.in { background: rgba(232, 98, 26, .18); border-radius: 0; }
 .cal-day.on { background: var(--ember); color: var(--ink); font-weight: 500; }
 
 .chat-controls.still { animation: none; }
